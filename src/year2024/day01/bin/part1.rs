@@ -1,20 +1,16 @@
 use adv_code::year2024::day01::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
-use const_format::concatcp;
 use itertools::Itertools;
 use std::iter::zip;
 use code_timing_macros::time_snippet;
 
 const YEAR: &str = "2024";
 const DAY: &str = "01";
-const INPUT_FILE: &str = concatcp!("input/", YEAR, "/", DAY, "/", "inputs.txt");
+const INPUT_FILE: &str = "input/2024/01/inputs.txt";
 
 fn main() -> Result<()> {
-    start_day(DAY);
-
-    //region Part 1
-    println!("=== Part 1 ===");
+    start_day(2024, 1, 1);
 
     let result = time_snippet!(calculate_total_distance(INPUT_FILE));
     println!("Total distance = {}", result);
@@ -34,10 +30,9 @@ fn calculate_total_distance(file_input_path: &str) -> i32 {
 
 #[cfg(test)]
 mod test {
-    use const_format::concatcp;
-    use crate::{calculate_total_distance, DAY, YEAR};
+    use crate::calculate_total_distance;
 
-    const TEST_INPUT_FILE: &str = concatcp!("input/", YEAR, "/", DAY, "/", "test_inputs_part1.txt");
+    const TEST_INPUT_FILE: &str = "input/2024/01/test_inputs_part1.txt";
 
     #[test]
     fn test_part1_calculate_total_distance() {

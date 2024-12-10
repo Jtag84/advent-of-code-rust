@@ -2,18 +2,13 @@ use adv_code::year2024::day01::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
-use const_format::concatcp;
 use itertools::Itertools;
 use std::collections::HashMap;
 
-const YEAR: &str = "2024";
-const DAY: &str = "01";
-const INPUT_FILE: &str = concatcp!("input/", YEAR, "/", DAY, "/", "inputs.txt");
+const INPUT_FILE: &str = "input/2024/01/inputs.txt";
 
 fn main() -> Result<()> {
-    start_day(DAY);
-
-    println!("=== Part 2 ===");
+    start_day(2024, 1, 2);
 
     let result = time_snippet!(calculate_similarity_score(INPUT_FILE));
     println!("Similarity score = {}", result);
@@ -35,17 +30,16 @@ fn calculate_similarity_score(file_input_path: &str) -> i32 {
     left_column.into_iter()
         .map(|x| {
             right_occurrences.get(&x)
-                .map_or_else(|| 0, 
+                .map_or_else(|| 0,
                              |y| y * x)}
         ).sum()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::{calculate_similarity_score, DAY, YEAR};
-    use const_format::concatcp;
+    use crate::calculate_similarity_score;
 
-    const TEST_INPUT_FILE: &str = concatcp!("input/", YEAR, "/", DAY, "/", "test_inputs_part1.txt");
+    const TEST_INPUT_FILE: &str = "input/2024/01/test_inputs_part2.txt";
 
     #[test]
     fn test_part1_calculate_total_distance() {

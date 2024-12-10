@@ -3,8 +3,9 @@ use std::io::Read;
 
 pub mod year2024;
 
-pub fn start_day(day: &str) {
-    println!("Advent of Code 2024 - Day {:0>2}", day);
+pub fn start_day(year: i32, day: i32, part: i32) {
+    println!("Advent of Code {year} - Day {:0>2}", day);
+    println!("=== Part {part} ===");
 }
 
 pub fn read_file_to_string(input_path: &str) -> String {
@@ -20,6 +21,6 @@ mod tests {
 
     #[test]
     fn it_works() {
-        start_day("00");
+        start_day(2024, 0, 0);
     }
 }

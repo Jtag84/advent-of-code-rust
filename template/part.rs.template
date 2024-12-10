@@ -1,0 +1,36 @@
+use adv_code::year2024::day01::parser::parse_input;
+use adv_code::*;
+use anyhow::*;
+use itertools::Itertools;
+use std::iter::zip;
+use code_timing_macros::time_snippet;
+
+const INPUT_FILE: &str = "input/<YEAR>/<DAY>/inputs.txt";
+
+fn main() -> Result<()> {
+    start_day(<YEAR>, <DAY>, <PART_NUMBER>);
+
+    let result = time_snippet!(part<PART_NUMBER>(INPUT_FILE));
+    println!("Result = {}", result);
+
+    assert_eq!(result, 1);
+
+    Ok(())
+}
+
+fn part<PART_NUMBER>(file_input_path: &str) -> i32 {
+    let (parsed) = parse_input(&file_input_path);
+    parsed
+}
+
+#[cfg(test)]
+mod test {
+    use crate::part<PART_NUMBER>;
+
+    const TEST_INPUT_FILE: &str = "input/<YEAR>/<DAY>/test_inputs_part<PART_NUMBER>.txt";
+
+    #[test]
+    fn part<PART_NUMBER>_test() -> Result<()> {
+        assert_eq!(part<PART_NUMBER>(TEST_INPUT_FILE), 1);
+    }
+}
