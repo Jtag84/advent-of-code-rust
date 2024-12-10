@@ -29,8 +29,16 @@ mkdir -p "$RUST_SRC_FOLDER/bin"
 cp ./template/part.rs.template "$FILE_PART1"
 cp ./template/part.rs.template "$FILE_PART2"
 cp ./template/parser.rs.template "$FILE_PARSER"
-cp ./template/day.rs.template "$FILE_PARSER"
 echo "pub mod day$DAY { pub mod parser; }" >> "src/year$YEAR.rs"
+echo "
+[[bin]]
+name = \"$YEAR-day$DAY-part1\"
+path = \"src/year$YEAR/day$DAY/bin/part1.rs\"
+
+[[bin]]
+name = \"$YEAR-day$DAY-part2\"
+path = \"src/year$YEAR/day$DAY/bin/part2.rs\"" >> Cargo.toml
+
 
 gsed -i "s/<DAY>/$DAY/g" "$FILE_PART1"
 gsed -i "s/<YEAR>/$YEAR/g" "$FILE_PART1"

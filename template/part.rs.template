@@ -1,4 +1,4 @@
-use adv_code::year2024::day01::parser::parse_input;
+use adv_code::year<YEAR>::day<DAY>::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
 use itertools::Itertools;
@@ -30,7 +30,7 @@ mod test {
     const TEST_INPUT_FILE: &str = "input/<YEAR>/<DAY>/test_inputs_part<PART_NUMBER>.txt";
 
     #[test]
-    fn part<PART_NUMBER>_test() -> Result<()> {
+    fn part<PART_NUMBER>_test() {
         assert_eq!(part<PART_NUMBER>(TEST_INPUT_FILE), 1);
     }
 }
