@@ -21,17 +21,13 @@ fn main() -> Result<()> {
 fn calculate_similarity_score(file_input_path: &str) -> i32 {
     let (left_column, right_column) = parse_input(&file_input_path);
 
-    let right_occurrences = right_column.into_iter()
-        .into_group_map_by(|x| *x)
-        .into_iter()
-        .map(|(key, group)| (key, group.len().try_into().unwrap()))
-        .collect::<HashMap<i32, i32>>();
+    let right_occurrences = right_column.into_iter().counts();
 
     left_column.into_iter()
         .map(|x| {
             right_occurrences.get(&x)
                 .map_or_else(|| 0,
-                             |y| y * x)}
+                             |y| (*y as i32) * x)}
         ).sum()
 }
 
