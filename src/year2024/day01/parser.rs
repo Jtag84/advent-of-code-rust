@@ -1,4 +1,4 @@
-use crate::read_file_to_string;
+use crate::lib::parser_commons::read_file_to_string;
 use nom::character::complete::{digit1, multispace0, multispace1};
 use nom::combinator::map_res;
 use nom::multi::many0;
