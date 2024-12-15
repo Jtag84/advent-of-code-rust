@@ -26,11 +26,15 @@ fn part1(file_input_path: &str) -> usize {
         .map(|(coordinates, _)| GridCoordinates::from(coordinates))
         .map(|coordinates| {
             Direction::iter()
-                .map(|direction|
-                    (0..4).map(|n| coordinates.move_to_n(direction, n))
-                        .map(|c| c.map(|GridCoordinates(row, col)| grid.get(row, col)).flatten())
+                .map(|direction| {
+                    (0..4)
+                        .map(|n| coordinates.move_to_n(direction, n))
+                        .map(|c| {
+                            c.map(|GridCoordinates(row, col)| grid.get(row, col))
+                                .flatten()
+                        })
                         .collect()
-                )
+                })
                 .filter(|letters: &Vec<Option<&char>>| letters.eq(&xmas))
                 .count()
         })

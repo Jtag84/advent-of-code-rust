@@ -1,7 +1,7 @@
+use adv_code::year2024::day02::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
-use adv_code::year2024::day02::parser::parse_input;
 
 const INPUT_FILE: &str = "input/2024/02/inputs.txt";
 
@@ -25,7 +25,7 @@ fn is_safe_up_to_one_wrong(report: &Vec<i32>) -> bool {
     if is_safe(report) {
         return true;
     }
-    
+
     for i in 0..report.len() {
         let mut report_with_one_removed = report.clone();
         report_with_one_removed.remove(i);
@@ -34,20 +34,22 @@ fn is_safe_up_to_one_wrong(report: &Vec<i32>) -> bool {
             return true;
         }
     }
-    
+
     false
 }
 
 fn is_safe(report: &Vec<i32>) -> bool {
-    let differences: Vec<i32> = report.iter().zip(report.iter().skip(1))
+    let differences: Vec<i32> = report
+        .iter()
+        .zip(report.iter().skip(1))
         .map(|(a, b)| b - a)
         .collect();
 
     (differences.iter().all(|v| v.is_negative()) || differences.iter().all(|v| v.is_positive()))
         && differences.iter().all(|v| {
-        let v = v.abs();
-        v >= 1 && v <= 3
-    })
+            let v = v.abs();
+            v >= 1 && v <= 3
+        })
 }
 
 #[cfg(test)]

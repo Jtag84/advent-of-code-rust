@@ -20,13 +20,15 @@ fn main() -> Result<()> {
 fn part2(file_input_path: &str) -> i32 {
     let operation_instructions = part2_parse_input(&file_input_path);
 
-    let mut is_do= true;
+    let mut is_do = true;
     let mut total = 0;
     for operation_instruction in operation_instructions {
         match operation_instruction {
-            Mul(l, r) => if is_do {
-                total += l * r
-            },
+            Mul(l, r) => {
+                if is_do {
+                    total += l * r
+                }
+            }
             Do => is_do = true,
             Dont => is_do = false,
         }

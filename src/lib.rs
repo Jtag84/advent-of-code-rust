@@ -1,6 +1,6 @@
 pub mod year2024;
 
-pub mod lib{
+pub mod lib {
     pub mod grid_utils;
     pub mod parser_commons;
 }

@@ -1,8 +1,8 @@
 use adv_code::year2024::day05::lib::is_valid;
+use adv_code::year2024::day05::lib::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
-use adv_code::year2024::day05::lib::parser::parse_input;
 
 const INPUT_FILE: &str = "input/2024/05/inputs.txt";
 
@@ -20,9 +20,10 @@ fn main() -> Result<()> {
 fn part1(file_input_path: &str) -> usize {
     let (rules, updates) = parse_input(&file_input_path);
 
-    updates.iter()
+    updates
+        .iter()
         .filter(|update_line| is_valid(&rules, update_line))
-        .map(|update_line| update_line[update_line.len()/2])
+        .map(|update_line| update_line[update_line.len() / 2])
         .sum()
 }
 

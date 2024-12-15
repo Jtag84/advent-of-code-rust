@@ -23,12 +23,14 @@ fn calculate_similarity_score(file_input_path: &str) -> i32 {
 
     let right_occurrences = right_column.into_iter().counts();
 
-    left_column.into_iter()
+    left_column
+        .into_iter()
         .map(|x| {
-            right_occurrences.get(&x)
-                .map_or_else(|| 0,
-                             |y| (*y as i32) * x)}
-        ).sum()
+            right_occurrences
+                .get(&x)
+                .map_or_else(|| 0, |y| (*y as i32) * x)
+        })
+        .sum()
 }
 
 #[cfg(test)]

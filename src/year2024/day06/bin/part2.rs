@@ -1,8 +1,9 @@
-use adv_code::year2024::day06::parser::parse_input;
+use adv_code::lib::grid_utils::set_grid_element;
+use adv_code::year2024::day06::lib::get_path;
+use adv_code::year2024::day06::lib::parser::parse_input;
+use adv_code::year2024::day06::lib::Termination::Loop;
 use adv_code::*;
 use anyhow::*;
-use itertools::Itertools;
-use std::iter::zip;
 use code_timing_macros::time_snippet;
 
 const INPUT_FILE: &str = "input/2024/06/inputs.txt";
@@ -13,14 +14,27 @@ fn main() -> Result<()> {
     let result = time_snippet!(part2(INPUT_FILE));
     println!("Result = {}", result);
 
-    assert_eq!(result, 1);
+    // assert_eq!(result, 1);
 
     Ok(())
 }
 
-fn part2(file_input_path: &str) -> i32 {
-    let (parsed) = parse_input(&file_input_path);
-    parsed
+fn part2(file_input_path: &str) -> usize {
+    let (guard_position, mut grid) = parse_input(&file_input_path);
+    let (path, _) = get_path(guard_position, &grid);
+
+    let mut looped_path_count = 0;
+    for (index, (path_coordinates, _)) in (&path).into_iter().enumerate().skip(1) {
+        set_grid_element(&mut grid, path_coordinates, '#');
+        let start_guard_position = path.get(index - 1).unwrap();
+
+        let (_, termination) = get_path(*start_guard_position, &grid);
+        if termination == Loop {
+            looped_path_count += 1;
+        }
+        set_grid_element(&mut grid, path_coordinates, '.');
+    }
+    looped_path_count
 }
 
 #[cfg(test)]
@@ -32,7 +46,7 @@ mod test {
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 1);
+        assert_eq!(part2(TEST_INPUT_FILE), 6);
     }
 
     #[test]

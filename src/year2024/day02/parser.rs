@@ -14,7 +14,7 @@ fn report(input: &str) -> IResult<&str, Vec<i32>> {
 }
 
 fn reports(input: &str) -> IResult<&str, Vec<Vec<i32>>> {
-    let (input, reports) = separated_list1(multispace1,report)(input)?;
+    let (input, reports) = separated_list1(multispace1, report)(input)?;
 
     Ok((input, reports))
 }
