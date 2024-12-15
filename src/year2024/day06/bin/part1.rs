@@ -1,16 +1,16 @@
-use adv_code::year<YEAR>::day<DAY>::parser::parse_input;
+use adv_code::year2024::day06::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
 use itertools::Itertools;
 use std::iter::zip;
 use code_timing_macros::time_snippet;
 
-const INPUT_FILE: &str = "input/<YEAR>/<DAY>/inputs.txt";
+const INPUT_FILE: &str = "input/2024/06/inputs.txt";
 
 fn main() -> Result<()> {
-    start_day(<YEAR>, <DAY>, <PART_NUMBER>);
+    start_day(2024, 06, 1);
 
-    let result = time_snippet!(part<PART_NUMBER>(INPUT_FILE));
+    let result = time_snippet!(part1(INPUT_FILE));
     println!("Result = {}", result);
 
     assert_eq!(result, 1);
@@ -18,7 +18,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn part<PART_NUMBER>(file_input_path: &str) -> i32 {
+fn part1(file_input_path: &str) -> i32 {
     let (parsed) = parse_input(&file_input_path);
     parsed
 }
@@ -26,13 +26,13 @@ fn part<PART_NUMBER>(file_input_path: &str) -> i32 {
 #[cfg(test)]
 mod test {
     use crate::parse_input;
-    use crate::part<PART_NUMBER>;
+    use crate::part1;
 
-    const TEST_INPUT_FILE: &str = "input/<YEAR>/<DAY>/test_inputs_part<PART_NUMBER>.txt";
+    const TEST_INPUT_FILE: &str = "input/2024/06/test_inputs_part1.txt";
 
     #[test]
-    fn part<PART_NUMBER>_test() {
-        assert_eq!(part<PART_NUMBER>(TEST_INPUT_FILE), 1);
+    fn part1_test() {
+        assert_eq!(part1(TEST_INPUT_FILE), 1);
     }
 
     #[test]

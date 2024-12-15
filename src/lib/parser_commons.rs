@@ -1,6 +1,8 @@
-use nom::Parser;
+use nom::{IResult, Parser};
 use std::fs::File;
 use std::io::Read;
+use nom::character::complete::digit1;
+use nom::combinator::map_res;
 
 pub fn read_file_to_string(input_path: &str) -> String {
     let mut file_string = String::new();
@@ -30,4 +32,8 @@ where
         }
     }
     results
+}
+
+pub fn number<T: std::str::FromStr>(input: &str) -> IResult<&str, T> {
+    map_res(digit1, str::parse)(input)
 }
