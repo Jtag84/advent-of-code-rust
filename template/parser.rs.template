@@ -3,11 +3,7 @@ use nom::combinator::map_res;
 use nom::multi::many0;
 use nom::sequence::tuple;
 use nom::IResult;
-use crate::lib::parser_commons::read_file_to_string;
-
-fn number(input: &str) -> IResult<&str, i32> {
-    map_res(digit1, str::parse)(input)
-}
+use crate::lib::parser_commons::{number, read_file_to_string};
 
 fn line(input: &str) -> IResult<&str, (i32, i32)> {
     let (input, (num1, _, num2, _)) = tuple((

@@ -25,7 +25,7 @@ fn part<PART_NUMBER>(file_input_path: &str) -> i32 {
 
 #[cfg(test)]
 mod test {
-    use crate::lib::parser::parse_input;
+    use adv_code::year<YEAR>::day<DAY>::lib::parser::parse_input;
     use crate::part<PART_NUMBER>;
 
     const TEST_INPUT_FILE: &str = "input/<YEAR>/<DAY>/test_inputs_part<PART_NUMBER>.txt";
