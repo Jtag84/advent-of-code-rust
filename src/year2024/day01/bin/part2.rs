@@ -3,7 +3,6 @@ use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
 use itertools::Itertools;
-use std::collections::HashMap;
 
 const INPUT_FILE: &str = "input/2024/01/inputs.txt";
 

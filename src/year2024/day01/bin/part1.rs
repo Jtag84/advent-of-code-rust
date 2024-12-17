@@ -5,8 +5,6 @@ use code_timing_macros::time_snippet;
 use itertools::Itertools;
 use std::iter::zip;
 
-const YEAR: &str = "2024";
-const DAY: &str = "01";
 const INPUT_FILE: &str = "input/2024/01/inputs.txt";
 
 fn main() -> Result<()> {

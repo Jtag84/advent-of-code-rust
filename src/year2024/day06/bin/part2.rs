@@ -68,18 +68,18 @@ mod test {
     fn test_set() {
         let mut set: HashSet<GuardPosition> = HashSet::new();
 
-        set.insert(((0, 0).into(), North));
-        let insert_south = set.insert(((0, 0).into(), South));
-        let insert_south_again = set.insert(((0, 0).into(), South));
-        let insert_south_different = set.insert(((1, 0).into(), South));
+        set.insert(((0_isize, 0).into(), North));
+        let insert_south = set.insert(((0_isize, 0).into(), South));
+        let insert_south_again = set.insert(((0_isize, 0).into(), South));
+        let insert_south_different = set.insert(((1_isize, 0).into(), South));
 
         assert!(insert_south);
         assert!(insert_south_different);
         assert!(!insert_south_again);
-        assert!(set.contains(&((0, 0).into(), South)));
-        assert!(set.contains(&((1, 0).into(), South)));
-        assert!(set.contains(&((0, 0).into(), North)));
-        assert!(!set.contains(&((0, 0).into(), East)));
-        assert!(!set.contains(&((1, 1).into(), South)));
+        assert!(set.contains(&((0_isize, 0).into(), South)));
+        assert!(set.contains(&((1_isize, 0).into(), South)));
+        assert!(set.contains(&((0_isize, 0).into(), North)));
+        assert!(!set.contains(&((0_isize, 0).into(), East)));
+        assert!(!set.contains(&((1_isize, 1).into(), South)));
     }
 }
