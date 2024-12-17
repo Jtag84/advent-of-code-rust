@@ -19,3 +19,6 @@ pub mod day06 {
 pub mod day07 {
     pub mod lib;
 }
+pub mod day08 {
+    pub mod lib;
+}

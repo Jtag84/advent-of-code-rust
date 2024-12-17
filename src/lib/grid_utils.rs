@@ -1,4 +1,5 @@
 use std::fmt::Display;
+use std::ops::{Add, Sub};
 use tabled::Table;
 
 use grid::Grid;
@@ -11,7 +12,7 @@ pub trait Coordinates: Sized {
     fn move_to(&self, direction: Direction) -> Option<Self> {
         self.move_to_n(direction, 1)
     }
-    fn move_to_n(&self, direction: Direction, n: usize) -> Option<Self> {
+    fn move_to_n(&self, direction: Direction, n: isize) -> Option<Self> {
         match direction {
             Direction::North => self.north_n(n),
             Direction::NorthEast => self.north_east_n(n),
@@ -26,8 +27,8 @@ pub trait Coordinates: Sized {
     fn north(&self) -> Option<Self> {
         self.north_n(1)
     }
-    fn north_n(&self, n: usize) -> Option<Self>;
-    fn north_east_n(&self, n: usize) -> Option<Self> {
+    fn north_n(&self, n: isize) -> Option<Self>;
+    fn north_east_n(&self, n: isize) -> Option<Self> {
         self.north_n(n)?.east_n(n)
     }
     fn north_east(&self) -> Option<Self> {
@@ -36,37 +37,37 @@ pub trait Coordinates: Sized {
     fn east(&self) -> Option<Self> {
         self.east_n(1)
     }
-    fn east_n(&self, n: usize) -> Option<Self>;
-    fn south_east_n(&self, n: usize) -> Option<Self> {
+    fn east_n(&self, n: isize) -> Option<Self>;
+    fn south_east_n(&self, n: isize) -> Option<Self> {
         self.south_n(n)?.east_n(n)
     }
     fn south_east(&self) -> Option<Self> {
         self.south_east_n(1)
     }
-    fn south_n(&self, n: usize) -> Option<Self>;
+    fn south_n(&self, n: isize) -> Option<Self>;
     fn south(&self) -> Option<Self> {
         self.south_n(1)
     }
     fn south_west(&self) -> Option<Self> {
         self.south_west_n(1)
     }
-    fn south_west_n(&self, n: usize) -> Option<Self> {
+    fn south_west_n(&self, n: isize) -> Option<Self> {
         self.south_n(n)?.west_n(n)
     }
     fn west(&self) -> Option<Self> {
         self.west_n(1)
     }
-    fn west_n(&self, n: usize) -> Option<Self>;
+    fn west_n(&self, n: isize) -> Option<Self>;
     fn north_west(&self) -> Option<Self> {
         self.north_west_n(1)
     }
-    fn north_west_n(&self, n: usize) -> Option<Self> {
+    fn north_west_n(&self, n: isize) -> Option<Self> {
         self.north_n(n)?.west_n(n)
     }
 }
 
-type Row = usize;
-type Column = usize;
+pub type Row = isize;
+pub type Column = isize;
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct GridCoordinates(pub Row, pub Column);
 
@@ -91,8 +92,38 @@ impl From<(Row, Column)> for GridCoordinates {
     }
 }
 
+impl Into<(usize, usize)> for GridCoordinates {
+    fn into(self) -> (usize, usize) {
+        (
+            self.row().try_into().unwrap(),
+            self.column().try_into().unwrap(),
+        )
+    }
+}
+
+impl From<(usize, usize)> for GridCoordinates {
+    fn from((row, column): (usize, usize)) -> Self {
+        GridCoordinates(row.try_into().unwrap(), column.try_into().unwrap())
+    }
+}
+
+impl Add for GridCoordinates {
+    type Output = GridCoordinates;
+
+    fn add(self, other: GridCoordinates) -> Self {
+        GridCoordinates(self.row() + other.row(), self.column() + other.column())
+    }
+}
+
+impl Sub for GridCoordinates {
+    type Output = GridCoordinates;
+    fn sub(self, other: GridCoordinates) -> Self {
+        GridCoordinates(self.row() - other.row(), self.column() - other.column())
+    }
+}
+
 impl Coordinates for GridCoordinates {
-    fn north_n(&self, n: usize) -> Option<Self> {
+    fn north_n(&self, n: isize) -> Option<Self> {
         if self.row() < n {
             None
         } else {
@@ -100,15 +131,15 @@ impl Coordinates for GridCoordinates {
         }
     }
 
-    fn east_n(&self, n: usize) -> Option<Self> {
+    fn east_n(&self, n: isize) -> Option<Self> {
         Some(GridCoordinates(self.row(), self.column() + n))
     }
 
-    fn south_n(&self, n: usize) -> Option<Self> {
+    fn south_n(&self, n: isize) -> Option<Self> {
         Some(GridCoordinates(self.row() + n, self.column()))
     }
 
-    fn west_n(&self, n: usize) -> Option<Self> {
+    fn west_n(&self, n: isize) -> Option<Self> {
         if self.column() < n {
             None
         } else {
