@@ -1,3 +1,4 @@
+use grid::Grid;
 use nom::character::complete::digit1;
 use nom::combinator::map_res;
 use nom::{IResult, Parser};
@@ -11,6 +12,29 @@ pub fn read_file_to_string(input_path: &str) -> String {
         .read_to_string(&mut file_string)
         .expect("can't read file");
     file_string
+}
+
+pub fn parse_grid_digit<T: Clone + From<u32>>(input_path: &str) -> Grid<T> {
+    parse_grid_with(input_path, |c| c.to_digit(10).unwrap().try_into().unwrap())
+}
+
+pub fn parse_grid<T>(input_path: &str) -> Grid<T>
+where
+    T: From<char> + Clone,
+{
+    parse_grid_with(input_path, |c| c.try_into().unwrap())
+}
+pub fn parse_grid_with<T, P>(input_path: &str, parser: P) -> Grid<T>
+where
+    T: Clone,
+    P: Fn(char) -> T,
+{
+    let file_string = read_file_to_string(input_path);
+    let parsed_input: Vec<Vec<T>> = file_string
+        .lines()
+        .map(|l| l.chars().map(|c| parser(c)).collect())
+        .collect();
+    Grid::from(&parsed_input)
 }
 
 // Keeps applying the parser until the end of the input, skipping a character when the parser doesn't match
