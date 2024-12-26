@@ -64,6 +64,14 @@ pub trait Coordinates: Sized {
     fn north_west_n(&self, n: isize) -> Option<Self> {
         self.north_n(n)?.west_n(n)
     }
+
+    fn cardinals(&self) -> Vec<Self> {
+        vec![self.north(), self.east(), self.south(), self.west()]
+            .into_iter()
+            .filter(Option::is_some)
+            .map(Option::unwrap)
+            .collect()
+    }
 }
 
 pub type Row = isize;
