@@ -86,6 +86,26 @@ impl GridCoordinates {
     pub fn column(&self) -> Column {
         self.1
     }
+
+    pub fn is_direction_equal_to_in_grid<T: Clone + PartialEq>(
+        &self,
+        grid: &Grid<T>,
+        direction: Direction,
+        equal_to: T,
+    ) -> bool {
+        self.move_to(direction)
+            .map(|c| c.is_equal_to_in_grid(grid, equal_to))
+            .unwrap_or(false)
+    }
+
+    pub fn is_equal_to_in_grid<T: Clone + PartialEq>(&self, grid: &Grid<T>, equal_to: T) -> bool {
+        self.get_from_grid(&grid)
+            .map_or_else(|| false, |v| v == equal_to)
+    }
+
+    pub fn get_from_grid<T: Clone>(&self, grid: &Grid<T>) -> Option<T> {
+        grid.get(self.row(), self.column()).cloned()
+    }
 }
 
 impl Into<(Row, Column)> for GridCoordinates {
