@@ -1,9 +1,8 @@
+use adv_code::year2024::day13::lib::calculate_presses;
 use adv_code::year2024::day13::lib::parser::parse_input;
 use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
-use itertools::Itertools;
-use std::iter::zip;
 
 const INPUT_FILE: &str = "input/2024/13/inputs.txt";
 
@@ -13,14 +12,22 @@ fn main() -> Result<()> {
     let result = time_snippet!(part2(INPUT_FILE));
     println!("Result = {}", result);
 
-    assert_eq!(result, 1);
+    assert_eq!(result, 99423413811305);
 
     Ok(())
 }
 
-fn part2(file_input_path: &str) -> i32 {
-    let (parsed) = parse_input(&file_input_path);
-    parsed
+const ADJUSTMENT: isize = 10_000_000_000_000;
+
+fn part2(file_input_path: &str) -> isize {
+    let machine_behaviors = parse_input(&file_input_path);
+    machine_behaviors
+        .iter()
+        .filter_map(|(a, b, (px, py))| {
+            calculate_presses(&(*a, *b, (px + ADJUSTMENT, py + ADJUSTMENT)))
+        })
+        .map(|(a, b)| 3 * a + b)
+        .sum()
 }
 
 #[cfg(test)]
@@ -32,7 +39,7 @@ mod test {
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 1);
+        assert_eq!(part2(TEST_INPUT_FILE), 875318608908);
     }
 
     #[test]
