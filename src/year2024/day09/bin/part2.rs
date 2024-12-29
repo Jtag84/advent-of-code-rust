@@ -122,7 +122,7 @@ mod test {
     fn test_vec_replacement() {
         let mut v: Vec<usize> = vec![0, 1, 2, 3, 4];
 
-        let i = *v.get(2).unwrap();
+        let i = *v.get(3).unwrap();
 
         let p = v.get_mut(i).unwrap();
         *p = 9;

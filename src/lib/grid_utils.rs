@@ -203,6 +203,90 @@ impl Direction {
     }
 }
 
+pub type X = isize;
+pub type Y = isize;
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct XYCoordinates(pub X, pub Y);
+
+impl XYCoordinates {
+    pub fn x(&self) -> X {
+        self.0
+    }
+
+    pub fn y(&self) -> Y {
+        self.1
+    }
+
+    pub fn mirror_around_middle_x(&self, x_width: isize) -> Self {
+        XYCoordinates(x_width - 1 - self.x(), self.y())
+    }
+}
+
+impl Into<(X, Y)> for XYCoordinates {
+    fn into(self) -> (X, Y) {
+        (self.x(), self.y())
+    }
+}
+
+impl From<(X, Y)> for XYCoordinates {
+    fn from((x, y): (X, Y)) -> Self {
+        XYCoordinates(x, y)
+    }
+}
+
+impl From<XYCoordinates> for GridCoordinates {
+    fn from(XYCoordinates(x, y): XYCoordinates) -> Self {
+        GridCoordinates(y, x)
+    }
+}
+
+impl Into<XYCoordinates> for GridCoordinates {
+    fn into(self) -> XYCoordinates {
+        XYCoordinates(self.column(), self.row())
+    }
+}
+
+impl Add for XYCoordinates {
+    type Output = XYCoordinates;
+
+    fn add(self, other: XYCoordinates) -> Self {
+        XYCoordinates(self.x() + other.x(), self.y() + other.y())
+    }
+}
+
+impl Sub for XYCoordinates {
+    type Output = XYCoordinates;
+    fn sub(self, other: XYCoordinates) -> Self {
+        XYCoordinates(self.x() - other.x(), self.y() - other.y())
+    }
+}
+
+impl Coordinates for XYCoordinates {
+    fn north_n(&self, n: isize) -> Option<Self> {
+        GridCoordinates::from(*self)
+            .north_n(n)
+            .map(GridCoordinates::into)
+    }
+
+    fn east_n(&self, n: isize) -> Option<Self> {
+        GridCoordinates::from(*self)
+            .east_n(n)
+            .map(GridCoordinates::into)
+    }
+
+    fn south_n(&self, n: isize) -> Option<Self> {
+        GridCoordinates::from(*self)
+            .south_n(n)
+            .map(GridCoordinates::into)
+    }
+
+    fn west_n(&self, n: isize) -> Option<Self> {
+        GridCoordinates::from(*self)
+            .west_n(n)
+            .map(GridCoordinates::into)
+    }
+}
+
 pub fn grid_to_str<T: Display>(grid: &Grid<T>) -> String {
     let a: Vec<String> = grid
         .iter_rows()

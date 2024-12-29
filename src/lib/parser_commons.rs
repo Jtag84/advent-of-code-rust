@@ -1,6 +1,8 @@
 use grid::Grid;
-use nom::character::complete::digit1;
-use nom::combinator::map_res;
+use nom::branch::alt;
+use nom::character::complete::{char, digit1};
+use nom::combinator::{map_res, opt, recognize};
+use nom::sequence::preceded;
 use nom::{IResult, Parser};
 use std::fs::File;
 use std::io::Read;
@@ -24,6 +26,7 @@ where
 {
     parse_grid_with(input_path, |c| c.try_into().unwrap())
 }
+
 pub fn parse_grid_with<T, P>(input_path: &str, parser: P) -> Grid<T>
 where
     T: Clone,
@@ -61,5 +64,8 @@ where
 }
 
 pub fn number<T: std::str::FromStr>(input: &str) -> IResult<&str, T> {
-    map_res(digit1, str::parse)(input)
+    map_res(
+        recognize(preceded(opt(alt((char('-'), char('+')))), digit1)),
+        |s: &str| s.parse(),
+    )(input)
 }
