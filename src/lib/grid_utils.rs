@@ -189,6 +189,10 @@ pub enum Direction {
 }
 
 impl Direction {
+    pub fn opposite(&self) -> Direction {
+        self.rotate_clockwise_90().rotate_clockwise_90()
+    }
+
     pub fn rotate_clockwise_90(&self) -> Direction {
         match self {
             Direction::North => Direction::East,

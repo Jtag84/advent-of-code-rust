@@ -33,6 +33,21 @@ where
     P: Fn(char) -> T,
 {
     let file_string = read_file_to_string(input_path);
+    parse_grid_from_string_with(file_string, parser)
+}
+
+pub fn parse_grid_from_string<T>(file_string: String) -> Grid<T>
+where
+    T: From<char> + Clone,
+{
+    parse_grid_from_string_with(file_string, |c| c.try_into().unwrap())
+}
+
+pub fn parse_grid_from_string_with<T, P>(file_string: String, parser: P) -> Grid<T>
+where
+    T: Clone,
+    P: Fn(char) -> T,
+{
     let parsed_input: Vec<Vec<T>> = file_string
         .lines()
         .map(|l| l.chars().map(|c| parser(c)).collect())
