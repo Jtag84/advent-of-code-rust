@@ -72,6 +72,8 @@ pub trait Coordinates: Sized {
             .map(Option::unwrap)
             .collect()
     }
+
+    fn manhattan_distance(&self, other: Self) -> usize;
 }
 
 pub type Row = isize;
@@ -174,6 +176,10 @@ impl Coordinates for GridCoordinates {
             Some(GridCoordinates(self.row(), self.column() - n))
         }
     }
+
+    fn manhattan_distance(&self, GridCoordinates(other_row, other_column): Self) -> usize {
+        (self.row() - other_row).abs() as usize + (other_column - other_column).abs() as usize
+    }
 }
 
 #[derive(EnumIter, Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -204,6 +210,12 @@ impl Direction {
             Direction::West => Direction::North,
             Direction::NorthWest => Direction::NorthEast,
         }
+    }
+
+    pub fn rotate_counter_clockwise_90(&self) -> Direction {
+        self.rotate_clockwise_90()
+            .rotate_clockwise_90()
+            .rotate_clockwise_90()
     }
 }
 
@@ -289,6 +301,10 @@ impl Coordinates for XYCoordinates {
             .west_n(n)
             .map(GridCoordinates::into)
     }
+
+    fn manhattan_distance(&self, other: Self) -> usize {
+        GridCoordinates::from(*self).manhattan_distance(GridCoordinates::from(other))
+    }
 }
 
 pub fn grid_to_str<T: Display>(grid: &Grid<T>) -> String {
@@ -311,4 +327,38 @@ pub fn set_grid_element<T>(
     *(grid
         .get_mut(guard_coordinates.row(), guard_coordinates.column())
         .unwrap()) = grid_element;
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct Position<C: Coordinates + Copy>(pub C, pub Direction);
+
+impl<C: Coordinates + Copy> Position<C> {
+    pub fn coordinates(&self) -> C {
+        self.0
+    }
+
+    pub fn direction(&self) -> Direction {
+        self.1
+    }
+
+    pub fn move1(&self) -> Option<Position<C>> {
+        self.move_n(1)
+    }
+
+    pub fn move_n(&self, n: isize) -> Option<Position<C>> {
+        self.coordinates()
+            .move_to_n(self.direction(), n)
+            .map(|coordinates| Position(coordinates, self.direction()))
+    }
+
+    pub fn rotate_clockwise_90(&self) -> Position<C> {
+        Position(self.coordinates(), self.direction().rotate_clockwise_90())
+    }
+
+    pub fn rotate_counter_clockwise_90(&self) -> Position<C> {
+        Position(
+            self.coordinates(),
+            self.direction().rotate_counter_clockwise_90(),
+        )
+    }
 }
