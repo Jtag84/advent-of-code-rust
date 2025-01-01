@@ -1,9 +1,9 @@
-use adv_code::lib::grid_utils::{Coordinates, Direction, GridCoordinates, Position};
+use adv_code::lib::grid_utils::{Coordinates, Direction, Position};
 use adv_code::year2024::day16::lib::parser::parse_input;
+use adv_code::year2024::day16::lib::successors;
 use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
-use grid::Grid;
 use pathfinding::prelude::astar;
 
 const INPUT_FILE: &str = "input/2024/16/inputs.txt";
@@ -19,7 +19,6 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-type Cost = usize;
 fn part1(file_input_path: &str) -> usize {
     let (grid, start, end) = parse_input(&file_input_path);
 
@@ -32,27 +31,6 @@ fn part1(file_input_path: &str) -> usize {
     )
     .unwrap();
     shortest_path.1
-}
-
-fn successors(
-    grid: &Grid<char>,
-    position: &Position<GridCoordinates>,
-) -> Vec<(Position<GridCoordinates>, Cost)> {
-    vec![
-        position
-            .move1()
-            .filter(|p| {
-                grid.get(p.coordinates().row(), p.coordinates().column())
-                    .filter(|v| **v == '.')
-                    .is_some()
-            })
-            .map(|p| (p, 1)),
-        Some((position.rotate_clockwise_90(), 1000)),
-        Some((position.rotate_counter_clockwise_90(), 1000)),
-    ]
-    .iter()
-    .filter_map(|p| *p)
-    .collect()
 }
 
 #[cfg(test)]
