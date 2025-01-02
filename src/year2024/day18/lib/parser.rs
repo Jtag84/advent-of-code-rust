@@ -2,11 +2,11 @@ use crate::lib::grid_utils::XYCoordinates;
 use crate::lib::parser_commons::{number, read_file_to_string};
 use nom::character::complete::{char, newline};
 use nom::multi::separated_list1;
-use nom::sequence::{terminated, tuple};
+use nom::sequence::separated_pair;
 use nom::IResult;
 
 fn xy_coordinate_parser(input: &str) -> IResult<&str, XYCoordinates> {
-    let (input, xy) = tuple((terminated(number, char(',')), number))(input)?;
+    let (input, xy) = separated_pair(number, char(','), number)(input)?;
     Ok((input, XYCoordinates::from(xy)))
 }
 
