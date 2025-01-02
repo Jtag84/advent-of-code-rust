@@ -18,9 +18,9 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn part<PART_NUMBER>(file_input_path: &str) -> i32 {
-    let (parsed) = parse_input(&file_input_path);
-    parsed
+fn part<PART_NUMBER>(file_input_path: &str) -> isize {
+    let parsed = parse_input(&file_input_path);
+    0
 }
 
 #[cfg(test)]
