@@ -52,3 +52,6 @@ pub mod day17 {
 pub mod day18 {
     pub mod lib;
 }
+pub mod day19 {
+    pub mod lib;
+}
