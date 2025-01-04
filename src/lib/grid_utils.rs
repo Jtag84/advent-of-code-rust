@@ -89,6 +89,10 @@ impl GridCoordinates {
         self.1
     }
 
+    pub fn get_grid_element<'a, T>(&self, grid: &'a Grid<T>) -> Option<&'a T> {
+        grid.get(self.row(), self.column())
+    }
+
     pub fn is_direction_equal_to_in_grid<T: Clone + PartialEq>(
         &self,
         grid: &Grid<T>,
@@ -319,13 +323,9 @@ pub fn grid_to_str<T: Display>(grid: &Grid<T>) -> String {
         .to_string()
 }
 
-pub fn set_grid_element<T>(
-    grid: &mut Grid<T>,
-    guard_coordinates: &GridCoordinates,
-    grid_element: T,
-) {
+pub fn set_grid_element<T>(grid: &mut Grid<T>, coordinates: &GridCoordinates, grid_element: T) {
     *(grid
-        .get_mut(guard_coordinates.row(), guard_coordinates.column())
+        .get_mut(coordinates.row(), coordinates.column())
         .unwrap()) = grid_element;
 }
 
