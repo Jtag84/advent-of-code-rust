@@ -182,7 +182,7 @@ impl Coordinates for GridCoordinates {
     }
 
     fn manhattan_distance(&self, GridCoordinates(other_row, other_column): Self) -> usize {
-        (self.row() - other_row).abs() as usize + (other_column - other_column).abs() as usize
+        (self.row() - other_row).abs() as usize + (self.column() - other_column).abs() as usize
     }
 }
 
