@@ -3,6 +3,8 @@ use adv_code::year2024::day22::lib::pseudorandom_n;
 use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
+use rayon::iter::ParallelIterator;
+use rayon::prelude::IntoParallelIterator;
 
 const INPUT_FILE: &str = "input/2024/22/inputs.txt";
 
@@ -20,8 +22,8 @@ fn main() -> Result<()> {
 fn part1(file_input_path: &str) -> usize {
     let secrets = parse_input(&file_input_path);
     secrets
-        .iter()
-        .map(|secret| pseudorandom_n(*secret, 2000))
+        .into_par_iter()
+        .map(|secret| pseudorandom_n(secret, 2000))
         .sum()
 }
 
