@@ -20,6 +20,7 @@ log = "0.4.22"
 strum_macros = "0.26.4"
 strum = "0.26.3"
 tabled = "0.17.0"
+rayon = "1.10.0"
 
 [[bin]]
 name = "2024-day01-part1"

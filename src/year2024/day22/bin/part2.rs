@@ -4,6 +4,7 @@ use adv_code::*;
 use anyhow::*;
 use code_timing_macros::time_snippet;
 use itertools::{iterate, Itertools};
+use rayon::prelude::*;
 use std::ops::Rem;
 
 const INPUT_FILE: &str = "input/2024/22/inputs.txt";
@@ -22,8 +23,10 @@ fn main() -> Result<()> {
 fn part2(file_input_path: &str) -> u16 {
     let secrets = parse_input(&file_input_path);
     let price_changes_sequence_map = secrets
-        .into_iter()
+        .into_par_iter()
         .flat_map(price_changes_sequences)
+        .collect::<Vec<_>>()
+        .into_iter()
         .into_group_map();
 
     price_changes_sequence_map
