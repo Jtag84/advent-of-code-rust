@@ -1,8 +1,9 @@
+use crate::year2024::day22::lib::parser::ParsedInput;
 use crate::year2024::day22::lib::pseudorandom_n;
 use rayon::iter::ParallelIterator;
 use rayon::prelude::IntoParallelIterator;
 
-pub fn part1(secrets: Vec<usize>) -> String {
+pub fn part1(secrets: ParsedInput) -> String {
     secrets
         .into_par_iter()
         .map(|secret| pseudorandom_n(secret, 2000))
@@ -13,11 +14,14 @@ pub fn part1(secrets: Vec<usize>) -> String {
 #[cfg(test)]
 mod test {
     use crate::year2024::day22::lib::part1::part1;
-    use crate::year2024::day22::lib::{pseudorandom, pseudorandom_n, DAY_SOLUTION};
+    use crate::year2024::day22::lib::{pseudorandom, pseudorandom_n, YEAR_2024_DAY_22_SOLUTION};
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(DAY_SOLUTION.get_parsed_test_inputs(1)), "37327623");
+        assert_eq!(
+            part1(YEAR_2024_DAY_22_SOLUTION.get_parsed_test_inputs(1)),
+            "37327623"
+        );
     }
 
     #[test]

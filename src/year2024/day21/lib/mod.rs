@@ -1,9 +1,27 @@
 use crate::lib::grid_utils::XYCoordinates;
+use crate::year2024::day21::lib::parser::{parse_input, ParsedInput};
+pub use crate::year2024::day21::lib::part1::part1;
+pub use crate::year2024::day21::lib::part2::part2;
 use crate::year2024::day21::lib::KeypadType::{Directional, Numeric};
+use crate::SOLUTIONS;
+use crate::{aoc_solver, DaySolution};
 use itertools::{repeat_n, Itertools};
 use std::collections::HashMap;
 
 pub mod parser;
+pub mod part1;
+pub mod part2;
+
+const YEAR_2024_DAY_21_SOLUTION: DaySolution<ParsedInput> = DaySolution {
+    year_day: (2024, 21),
+    parser: parse_input,
+    part1,
+    expected_part1: "123096",
+    part2,
+    expected_part2: "154517692795352",
+};
+
+aoc_solver!(YEAR_2024_DAY_21_SOLUTION);
 
 pub fn chains_keypad(code: &str, number_of_robots: usize) -> usize {
     let numeric_keypad = NumericKeypad { arm_position: 'A' };

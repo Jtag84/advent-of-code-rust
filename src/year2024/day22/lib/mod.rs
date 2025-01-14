@@ -1,15 +1,18 @@
-use crate::aoc_solver;
-use crate::year2024::day22::lib::parser::parse_input;
-use crate::DaySolution;
-use crate::SOLUTIONS;
+pub use crate::aoc_solver;
+pub use crate::year2024::day22::lib::parser::parse_input;
+use crate::year2024::day22::lib::parser::ParsedInput;
+pub use crate::year2024::day22::lib::part1::part1;
+pub use crate::year2024::day22::lib::part2::part2;
+pub use crate::DaySolution;
+pub use crate::SOLUTIONS;
 use itertools::{iterate, Itertools};
 use std::ops::{BitXor, Div, Mul, Rem};
 
 pub mod parser;
-mod part1;
-mod part2;
+pub mod part1;
+pub mod part2;
 
-const DAY_SOLUTION: DaySolution<Vec<usize>> = DaySolution {
+const YEAR_2024_DAY_22_SOLUTION: DaySolution<ParsedInput> = DaySolution {
     year_day: (2024, 22),
     parser: parse_input,
     part1,
@@ -18,7 +21,7 @@ const DAY_SOLUTION: DaySolution<Vec<usize>> = DaySolution {
     expected_part2: "1455",
 };
 
-aoc_solver!(DAY_SOLUTION);
+aoc_solver!(YEAR_2024_DAY_22_SOLUTION);
 
 pub fn pseudorandom_n(secret: usize, n: usize) -> usize {
     iterate(secret, |s| pseudorandom(*s))

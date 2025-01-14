@@ -1,9 +1,10 @@
+use crate::year2024::day22::lib::parser::ParsedInput;
 use crate::year2024::day22::lib::pseudorandom;
 use itertools::{iterate, Itertools};
 use rayon::prelude::*;
 use std::ops::Rem;
 
-pub(crate) fn part2(secrets: Vec<usize>) -> String {
+pub fn part2(secrets: ParsedInput) -> String {
     let price_changes_sequence_map = secrets
         .into_par_iter()
         .flat_map(price_changes_sequences)
@@ -52,12 +53,15 @@ fn price_changes_sequences(secret: usize) -> Vec<(PriceChangeSequence, Price)> {
 #[cfg(test)]
 mod test {
     use crate::year2024::day22::lib::part2::{get_prices, part2, price_changes_sequences};
-    use crate::year2024::day22::lib::DAY_SOLUTION;
+    use crate::year2024::day22::lib::YEAR_2024_DAY_22_SOLUTION;
     use itertools::Itertools;
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(DAY_SOLUTION.get_parsed_test_inputs(2)), "23");
+        assert_eq!(
+            part2(YEAR_2024_DAY_22_SOLUTION.get_parsed_test_inputs(2)),
+            "23"
+        );
     }
 
     #[test]
