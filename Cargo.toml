@@ -21,6 +21,16 @@ strum_macros = "0.26.4"
 strum = "0.26.3"
 tabled = "0.17.0"
 rayon = "1.10.0"
+clap = { version = "4.5.26", features = ["derive"] }
+memory-stats = "1.2.0"
+prettytable = "0.10.0"
+once_cell = "1.20.2"
+downcast-rs = "2.0.1"
+ctor = "0.2.9"
+
+[[bin]]
+name = "aoc"
+path = "src/aoc.rs"
 
 [[bin]]
 name = "2024-day01-part1"
