@@ -1,34 +1,17 @@
-use adv_code::lib::grid_utils::Coordinates;
-use adv_code::year2024::day20::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::Coordinates;
+use crate::year2024::day20::lib::parser::ParsedInput;
 use pathfinding::prelude::astar;
 
-const INPUT_FILE: &str = "input/2024/20/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 20, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE, 100));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 982891);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str, cheat_cost_saving: usize) -> usize {
-    calculate_count_of_cheats_saving(&file_input_path, cheat_cost_saving, 20)
+pub fn part2(parsed_input: ParsedInput, cheat_cost_saving: usize) -> String {
+    calculate_count_of_cheats_saving(parsed_input, cheat_cost_saving, 20).to_string()
 }
 
 // This method could also be used for part1, but the current part1 implementation is much faster
 fn calculate_count_of_cheats_saving(
-    file_input_path: &&str,
+    (racetrack, start, end): ParsedInput,
     cheat_cost_saving: usize,
     cheat_max_length: usize,
 ) -> usize {
-    let (racetrack, start, end) = parse_input(&file_input_path);
     let (no_cheat_path, _) = astar(
         &start,
         |node| {
@@ -64,19 +47,14 @@ fn calculate_count_of_cheats_saving(
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-    use adv_code::year2024::day20::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/20/test_inputs_part2.txt";
+    use crate::year2024::day20::lib::part2::part2;
+    use crate::year2024::day20::lib::YEAR_2024_DAY_20_SOLUTION;
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE, 70), 41);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_20_SOLUTION.get_parsed_test_inputs(2), 70),
+            "41"
+        );
     }
 }

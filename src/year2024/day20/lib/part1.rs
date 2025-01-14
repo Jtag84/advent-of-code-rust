@@ -1,27 +1,10 @@
-use adv_code::lib::grid_utils::{Coordinates, GridCoordinates};
-use adv_code::year2024::day20::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::{Coordinates, GridCoordinates};
+use crate::year2024::day20::lib::parser::ParsedInput;
 use itertools::Itertools;
 use pathfinding::prelude::astar;
 use std::collections::HashMap;
 
-const INPUT_FILE: &str = "input/2024/20/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 20, 1);
-
-    let result = time_snippet!(part1(INPUT_FILE, 100));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 1343);
-
-    Ok(())
-}
-
-fn part1(file_input_path: &str, cheat_cost_saving: usize) -> usize {
-    let (racetrack, start, end) = parse_input(&file_input_path);
+pub fn part1((racetrack, start, end): ParsedInput, cheat_cost_saving: usize) -> String {
     let (no_cheat_path, _) = astar(
         &start,
         |node| {
@@ -77,25 +60,19 @@ fn part1(file_input_path: &str, cheat_cost_saving: usize) -> usize {
         })
         .filter(|cost_saving| *cost_saving >= cheat_cost_saving as isize)
         .count()
+        .to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::part1;
-    use adv_code::lib::grid_utils::grid_to_str;
-    use adv_code::year2024::day20::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/20/test_inputs_part1.txt";
+    use crate::year2024::day20::lib::part1::part1;
+    use crate::year2024::day20::lib::YEAR_2024_DAY_20_SOLUTION;
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(TEST_INPUT_FILE, 12), 8);
-    }
-
-    #[test]
-    fn test_parser() {
-        let (racetrack, start, end) = parse_input(TEST_INPUT_FILE);
-        println!("start: {start:?}, end: {end:?}");
-        println!("{}", grid_to_str(&racetrack));
+        assert_eq!(
+            part1(YEAR_2024_DAY_20_SOLUTION.get_parsed_test_inputs(1), 12),
+            "8"
+        );
     }
 }
