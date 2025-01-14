@@ -1,28 +1,11 @@
-use adv_code::year2024::day19::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::year2024::day19::lib::parser::ParsedInput;
 use itertools::Itertools;
 use nom::bytes::complete::tag;
 use nom::{error, Compare, IResult, InputLength, InputTake};
 use std::collections::HashMap;
 use std::hash::Hash;
 
-const INPUT_FILE: &str = "input/2024/19/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 19, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 600639829400603);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str) -> isize {
-    let (patterns, designs) = parse_input(&file_input_path);
+pub fn part2((patterns, designs): ParsedInput) -> String {
     let patterns_str = patterns.iter().map(|s| s.as_str()).collect_vec();
     let mut cache = HashMap::new();
     designs
@@ -32,7 +15,8 @@ fn part2(file_input_path: &str) -> isize {
                 .unwrap_or(("", 0))
                 .1
         })
-        .sum()
+        .sum::<isize>()
+        .to_string()
 }
 
 pub fn parse_design_match_count<'a, Input>(
@@ -68,19 +52,14 @@ where
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-    use adv_code::year2024::day19::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/19/test_inputs_part2.txt";
+    use crate::year2024::day19::lib::part2::part2;
+    use crate::year2024::day19::lib::YEAR_2024_DAY_19_SOLUTION;
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 16);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_19_SOLUTION.get_parsed_test_inputs(2)),
+            "16"
+        );
     }
 }

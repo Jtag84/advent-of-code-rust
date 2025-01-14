@@ -13,7 +13,9 @@ fn designs_parser(input: &str) -> IResult<&str, Vec<&str>> {
     separated_list1(newline, alpha1)(input)
 }
 
-pub fn parse_input(input_path: &str) -> (Vec<String>, Vec<String>) {
+pub type ParsedInput = (Vec<String>, Vec<String>);
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let (_, result) = separated_pair(patterns_parser, multispace1, designs_parser)(&file_string)
