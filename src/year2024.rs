@@ -1,5 +1,5 @@
 pub mod day01 {
-    pub mod parser;
+    pub mod lib;
 }
 pub mod day02 {
     pub mod lib;

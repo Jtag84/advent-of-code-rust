@@ -22,7 +22,9 @@ fn parse_columns(input: &str) -> IResult<&str, (Vec<i32>, Vec<i32>)> {
     Ok((input, (left, right)))
 }
 
-pub fn parse_input(input_path: &str) -> (Vec<i32>, Vec<i32>) {
+pub type ParsedInput = (Vec<i32>, Vec<i32>);
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let parsed_columns_result = parse_columns(&file_string);

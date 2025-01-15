@@ -32,11 +32,3 @@ ctor = "0.2.9"
 [[bin]]
 name = "aoc"
 path = "src/aoc.rs"
-
-[[bin]]
-name = "2024-day01-part1"
-path = "src/year2024/day01/bin/part1.rs"
-
-[[bin]]
-name = "2024-day01-part2"
-path = "src/year2024/day01/bin/part2.rs"
