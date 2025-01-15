@@ -1,28 +1,11 @@
-use adv_code::lib::grid_utils::XYCoordinates;
-use adv_code::year2024::day18::lib::find_shortest_path_after_dropping_n_bytes;
-use adv_code::year2024::day18::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::XYCoordinates;
+use crate::year2024::day18::lib::find_shortest_path_after_dropping_n_bytes;
+use crate::year2024::day18::lib::parser::ParsedInput;
 
-const INPUT_FILE: &str = "input/2024/18/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 18, 2);
-
-    let result @ XYCoordinates(x, y) = time_snippet!(part2(INPUT_FILE, 71, 1024));
-    println!("Result = {x},{y}");
-
-    assert_eq!(result, XYCoordinates(27, 60));
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str, grid_size: usize, num_bytes_to_drop: usize) -> XYCoordinates {
-    let bytes = &parse_input(&file_input_path);
+pub fn part2(bytes: ParsedInput, grid_size: usize, num_bytes_to_drop: usize) -> XYCoordinates {
     let current = (bytes.len() - num_bytes_to_drop) / 2 + num_bytes_to_drop;
     let index =
-        find_first_blocking_byte(bytes, grid_size, num_bytes_to_drop, bytes.len(), current) - 1;
+        find_first_blocking_byte(&bytes, grid_size, num_bytes_to_drop, bytes.len(), current) - 1;
     bytes[index]
 }
 
@@ -69,20 +52,14 @@ fn find_first_blocking_byte(
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-    use adv_code::lib::grid_utils::XYCoordinates;
-    use adv_code::year2024::day18::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/18/test_inputs_part2.txt";
+    use crate::lib::grid_utils::XYCoordinates;
+    use crate::year2024::day18::lib::{part2, YEAR_2024_DAY_18_SOLUTION};
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE, 7, 12), XYCoordinates(6, 1));
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_18_SOLUTION.get_parsed_test_inputs(2), 7, 12),
+            XYCoordinates(6, 1)
+        );
     }
 }

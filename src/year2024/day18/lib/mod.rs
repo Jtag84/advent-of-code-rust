@@ -1,8 +1,27 @@
 use crate::lib::grid_utils::{Coordinates, XYCoordinates};
+use crate::year2024::day18::lib::parser::{parse_input, ParsedInput};
+pub use crate::year2024::day18::lib::part1::part1;
+pub use crate::year2024::day18::lib::part2::part2;
+use crate::SOLUTIONS;
+use crate::{aoc_solver, DaySolution};
 use pathfinding::prelude::astar;
 use std::collections::HashSet;
+use std::string::ToString;
 
 pub mod parser;
+pub mod part1;
+pub mod part2;
+
+const YEAR_2024_DAY_18_SOLUTION: DaySolution<ParsedInput> = DaySolution {
+    year_day: (2024, 18),
+    parser: parse_input,
+    part1: |parsed_input| part1(parsed_input, 71, 1024).to_string(),
+    expected_part1: "404",
+    part2: |parsed_input| part2(parsed_input, 71, 1024).to_string(),
+    expected_part2: "XYCoordinates(27,60)",
+};
+
+aoc_solver!(YEAR_2024_DAY_18_SOLUTION);
 
 pub fn find_shortest_path_after_dropping_n_bytes(
     bytes_list: &Vec<XYCoordinates>,

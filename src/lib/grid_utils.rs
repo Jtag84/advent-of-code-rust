@@ -228,6 +228,12 @@ pub type Y = isize;
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct XYCoordinates(pub X, pub Y);
 
+impl Display for XYCoordinates {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "XYCoordinates({},{})", self.x(), self.y())
+    }
+}
+
 impl XYCoordinates {
     pub fn x(&self) -> X {
         self.0
