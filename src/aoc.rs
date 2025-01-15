@@ -23,6 +23,8 @@ struct Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
+    println!("{}", BenchmarkMetrics::header());
+
     let benchmarks = SOLUTIONS
         .lock()
         .unwrap()
@@ -34,13 +36,16 @@ fn main() -> anyhow::Result<()> {
             let mut solutions_parts = vec![];
 
             if args.part.is_empty() || args.part.contains(&InputParser) {
-                solutions_parts.push(solution.benchmark_parser(args.iterations));
+                print_and_insert(
+                    &mut solutions_parts,
+                    solution.benchmark_parser(args.iterations),
+                );
             }
             if args.part.is_empty() || args.part.contains(&Part1) {
-                solutions_parts.push(solution.solve_part1(args.iterations));
+                print_and_insert(&mut solutions_parts, solution.solve_part1(args.iterations));
             }
             if args.part.is_empty() || args.part.contains(&Part2) {
-                solutions_parts.push(solution.solve_part2(args.iterations));
+                print_and_insert(&mut solutions_parts, solution.solve_part2(args.iterations));
             }
 
             solutions_parts
@@ -58,10 +63,11 @@ fn main() -> anyhow::Result<()> {
         .max()
         .unwrap();
 
-    println!("{}", BenchmarkMetrics::header());
-    benchmarks
-        .iter()
-        .for_each(|benchmark| println!("{}", benchmark.row_string()));
     println!("{}", BenchmarkMetrics::footer(total_avg_time, max_memory));
     Ok(())
+}
+
+fn print_and_insert(solutions_parts: &mut Vec<BenchmarkMetrics>, metrics: BenchmarkMetrics) {
+    println!("{}", metrics.row_string());
+    solutions_parts.push(metrics);
 }
