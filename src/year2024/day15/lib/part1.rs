@@ -1,26 +1,8 @@
-use adv_code::lib::grid_utils::{Coordinates, Direction, GridCoordinates};
-use adv_code::year2024::day15::lib::parser::{parse_input, RobotPosition};
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::{Coordinates, Direction, GridCoordinates};
+use crate::year2024::day15::lib::parser::{ParsedInput, RobotPosition};
 use grid::Grid;
 
-const INPUT_FILE: &str = "input/2024/15/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 15, 1);
-
-    let result = time_snippet!(part1(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 1563092);
-
-    Ok(())
-}
-
-fn part1(file_input_path: &str) -> usize {
-    let (mut grid, robot_position, movements) = parse_input(&file_input_path);
-
+pub fn part1((mut grid, robot_position, movements): ParsedInput) -> String {
     movements
         .iter()
         .fold(robot_position, |current_robot_position, movement| {
@@ -30,7 +12,8 @@ fn part1(file_input_path: &str) -> usize {
     grid.indexed_iter()
         .filter(|(_, grid_value)| **grid_value == 'O')
         .map(|(box_coordinates, _)| box_coordinates.0 * 100 + box_coordinates.1)
-        .sum()
+        .sum::<usize>()
+        .to_string()
 }
 
 fn move_robot(
@@ -80,21 +63,14 @@ fn find_next_empty_in_direction(
 
 #[cfg(test)]
 mod test {
-    use crate::part1;
-    use adv_code::lib::grid_utils::grid_to_str;
-    use adv_code::year2024::day15::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/15/test_inputs_part1.txt";
+    use crate::year2024::day15::lib::part1::part1;
+    use crate::year2024::day15::lib::YEAR_2024_DAY_15_SOLUTION;
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(TEST_INPUT_FILE), 10092);
-    }
-
-    #[test]
-    fn test_parser() {
-        let (grid, robot_position, movements) = parse_input(TEST_INPUT_FILE);
-        println!("{}", grid_to_str(&grid));
-        println!("robot_position = {robot_position:?}, movements = {movements:?}",);
+        assert_eq!(
+            part1(YEAR_2024_DAY_15_SOLUTION.get_parsed_test_inputs(1)),
+            "10092"
+        );
     }
 }

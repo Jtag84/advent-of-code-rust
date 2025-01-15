@@ -1,38 +1,18 @@
-use adv_code::lib::grid_utils::Direction::{East, North, South, West};
-use adv_code::lib::grid_utils::{
-    grid_to_str, set_grid_element, Coordinates, Direction, GridCoordinates,
-};
-use adv_code::year2024::day15::lib::parser::{parse_input, RobotPosition};
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::Direction::{East, North, South, West};
+use crate::lib::grid_utils::{set_grid_element, Coordinates, Direction, GridCoordinates};
+use crate::year2024::day15::lib::parser::{ParsedInput, RobotPosition};
 use grid::Grid;
 use itertools::Itertools;
 
-const INPUT_FILE: &str = "input/2024/15/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 15, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 1582688);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str) -> usize {
-    let (grid, robot_position, movements) = parse_input(&file_input_path);
-
+pub fn part2((grid, robot_position, movements): ParsedInput) -> String {
     let mut resized_grid = resizing_grid(grid);
     let new_robot_position = GridCoordinates(robot_position.row(), robot_position.column() * 2);
 
-    println!(
-        "old position {:?}, New robot position is {:?}",
-        robot_position, new_robot_position
-    );
-    println!("{}", grid_to_str(&resized_grid));
+    // println!(
+    //     "old position {:?}, New robot position is {:?}",
+    //     robot_position, new_robot_position
+    // );
+    // println!("{}", grid_to_str(&resized_grid));
 
     let final_robot_position =
         movements
@@ -42,14 +22,15 @@ fn part2(file_input_path: &str) -> usize {
             });
     set_grid_element(&mut resized_grid, &final_robot_position, '@');
 
-    println!("final robot position is {:?}", final_robot_position);
-    println!("{}", grid_to_str(&resized_grid));
+    // println!("final robot position is {:?}", final_robot_position);
+    // println!("{}", grid_to_str(&resized_grid));
 
     resized_grid
         .indexed_iter()
         .filter(|(_, grid_value)| **grid_value == '[')
         .map(|(box_coordinates, _)| box_coordinates.0 * 100 + box_coordinates.1)
-        .sum()
+        .sum::<usize>()
+        .to_string()
 }
 
 fn resizing_grid(grid: Grid<char>) -> Grid<char> {
@@ -171,19 +152,14 @@ fn swap_grid_elements(
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-    use adv_code::year2024::day15::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/15/test_inputs_part2.txt";
+    use crate::year2024::day15::lib::part2::part2;
+    use crate::year2024::day15::lib::YEAR_2024_DAY_15_SOLUTION;
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 9021);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_15_SOLUTION.get_parsed_test_inputs(2)),
+            "9021"
+        );
     }
 }

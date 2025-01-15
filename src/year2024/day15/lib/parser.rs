@@ -45,7 +45,9 @@ fn parse_movements(input: &str) -> IResult<&str, Movements> {
     Ok((input, movements))
 }
 
-pub fn parse_input(input_path: &str) -> (Grid<char>, RobotPosition, Movements) {
+pub type ParsedInput = (Grid<char>, RobotPosition, Movements);
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let split: Vec<_> = file_string.split_terminator("\n\n").collect();
