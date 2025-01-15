@@ -1,27 +1,10 @@
-use adv_code::lib::grid_utils::set_grid_element;
-use adv_code::year2024::day06::lib::get_path;
-use adv_code::year2024::day06::lib::parser::parse_input;
-use adv_code::year2024::day06::lib::Termination::Loop;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::set_grid_element;
+use crate::year2024::day06::lib::get_path;
+use crate::year2024::day06::lib::parser::ParsedInput;
+use crate::year2024::day06::lib::Termination::Loop;
 use std::collections::HashSet;
 
-const INPUT_FILE: &str = "input/2024/06/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 06, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 1836);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str) -> usize {
-    let (guard_position, mut grid) = parse_input(&file_input_path);
+pub fn part2((guard_position, mut grid): ParsedInput) -> String {
     let (path, _) = get_path(guard_position, &grid);
 
     let mut already_blocked = HashSet::new();
@@ -40,28 +23,22 @@ fn part2(file_input_path: &str) -> usize {
         }
         set_grid_element(&mut grid, path_coordinates, '.');
     }
-    looped_path_count
+    looped_path_count.to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::parse_input;
-    use crate::part2;
-    use adv_code::lib::grid_utils::Direction::{East, North, South};
-    use adv_code::year2024::day06::lib::parser::GuardPosition;
+    use crate::lib::grid_utils::Direction::{East, North, South};
+    use crate::year2024::day06::lib::parser::GuardPosition;
+    use crate::year2024::day06::lib::{part2, YEAR_2024_DAY_06_SOLUTION};
     use std::collections::HashSet;
-
-    const TEST_INPUT_FILE: &str = "input/2024/06/test_inputs_part2.txt";
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 6);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_06_SOLUTION.get_parsed_test_inputs(2)),
+            "6"
+        );
     }
 
     #[test]

@@ -3,8 +3,10 @@ use crate::lib::grid_utils::{Direction, GridCoordinates};
 use crate::lib::parser_commons::parse_grid;
 use grid::Grid;
 
+pub type ParsedInput = (GuardPosition, Grid<char>);
+
 pub type GuardPosition = (GridCoordinates, Direction);
-pub fn parse_input(input_path: &str) -> (GuardPosition, Grid<char>) {
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let mut grid = parse_grid(&input_path);
 
     let guard_start_coordinates: GridCoordinates = grid
