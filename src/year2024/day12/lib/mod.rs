@@ -2,12 +2,30 @@ use crate::lib::grid_utils::Direction::{
     East, North, NorthEast, NorthWest, South, SouthEast, SouthWest, West,
 };
 use crate::lib::grid_utils::{Coordinates, GridCoordinates};
+use crate::year2024::day12::lib::parser::{parse_input, ParsedInput};
+pub use crate::year2024::day12::lib::part1::part1;
+pub use crate::year2024::day12::lib::part2::part2;
 use crate::year2024::day12::lib::GardenEnum::{GardenStruct, PartOf};
+use crate::SOLUTIONS;
+use crate::{aoc_solver, DaySolution};
 use grid::Grid;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 pub mod parser;
+pub mod part1;
+pub mod part2;
+
+const YEAR_2024_DAY_12_SOLUTION: DaySolution<ParsedInput> = DaySolution {
+    year_day: (2024, 12),
+    parser: parse_input,
+    part1,
+    expected_part1: "1375574",
+    part2,
+    expected_part2: "830566",
+};
+
+aoc_solver!(YEAR_2024_DAY_12_SOLUTION);
 
 pub type Id = usize;
 pub type RegionId = char;
