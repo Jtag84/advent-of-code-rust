@@ -1,27 +1,9 @@
-use adv_code::lib::grid_utils::GridCoordinates;
-use adv_code::year2024::day08::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::GridCoordinates;
+use crate::year2024::day08::lib::parser::ParsedInput;
 use itertools::Itertools;
 use std::collections::HashMap;
 
-const INPUT_FILE: &str = "input/2024/08/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 08, 1);
-
-    let result = time_snippet!(part1(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 392);
-
-    Ok(())
-}
-
-fn part1(file_input_path: &str) -> usize {
-    let grid = parse_input(&file_input_path);
-
+pub fn part1(grid: ParsedInput) -> String {
     let antennas_coordinates: HashMap<&char, Vec<GridCoordinates>> = grid
         .indexed_iter()
         .filter(|(_, &element)| element != '.')
@@ -41,7 +23,7 @@ fn part1(file_input_path: &str) -> usize {
         .unique()
         .filter(|GridCoordinates(row, column)| grid.get(*row, *column).is_some());
 
-    antinodes.count()
+    antinodes.count().to_string()
 }
 
 fn get_antinodes(
@@ -55,20 +37,14 @@ fn get_antinodes(
 
 #[cfg(test)]
 mod test {
-    use crate::part1;
-    use adv_code::lib::grid_utils::grid_to_str;
-    use adv_code::year2024::day08::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/08/test_inputs_part1.txt";
+    use crate::year2024::day08::lib::part1::part1;
+    use crate::year2024::day08::lib::YEAR_2024_DAY_08_SOLUTION;
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(TEST_INPUT_FILE), 14);
-    }
-
-    #[test]
-    fn test_parser() {
-        let grid = parse_input(TEST_INPUT_FILE);
-        println!("{}", grid_to_str(&grid));
+        assert_eq!(
+            part1(YEAR_2024_DAY_08_SOLUTION.get_parsed_test_inputs(1)),
+            "14"
+        );
     }
 }
