@@ -1,8 +1,26 @@
 use crate::lib::grid_utils::{Coordinates, GridCoordinates};
+use crate::year2024::day10::lib::parser::{parse_input, ParsedInput};
+pub use crate::year2024::day10::lib::part1::part1;
+pub use crate::year2024::day10::lib::part2::part2;
+use crate::SOLUTIONS;
+use crate::{aoc_solver, DaySolution};
 use grid::Grid;
 use std::collections::HashMap;
 
 pub mod parser;
+pub mod part1;
+pub mod part2;
+
+const YEAR_2024_DAY_10_SOLUTION: DaySolution<ParsedInput> = DaySolution {
+    year_day: (2024, 10),
+    parser: parse_input,
+    part1,
+    expected_part1: "482",
+    part2,
+    expected_part2: "1094",
+};
+
+aoc_solver!(YEAR_2024_DAY_10_SOLUTION);
 
 pub type Height = u32;
 pub type Position = (GridCoordinates, Height);
