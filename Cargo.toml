@@ -79,11 +79,3 @@ path = "src/year2024/day06/bin/part1.rs"
 [[bin]]
 name = "2024-day06-part2"
 path = "src/year2024/day06/bin/part2.rs"
-
-[[bin]]
-name = "2024-day07-part1"
-path = "src/year2024/day07/bin/part1.rs"
-
-[[bin]]
-name = "2024-day07-part2"
-path = "src/year2024/day07/bin/part2.rs"

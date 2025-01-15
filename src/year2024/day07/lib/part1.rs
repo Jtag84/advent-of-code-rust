@@ -1,24 +1,5 @@
-use adv_code::year2024::day07::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
-
-const INPUT_FILE: &str = "input/2024/07/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 07, 1);
-
-    let result = time_snippet!(part1(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 21572148763543);
-
-    Ok(())
-}
-
-fn part1(file_input_path: &str) -> isize {
-    let equations = parse_input(&file_input_path);
-
+use crate::year2024::day07::lib::parser::ParsedInput;
+pub fn part1(equations: ParsedInput) -> String {
     equations
         .into_iter()
         .map(|(result, numbers)| {
@@ -31,7 +12,8 @@ fn part1(file_input_path: &str) -> isize {
         })
         .filter(Option::is_some)
         .map(Option::unwrap)
-        .sum()
+        .sum::<isize>()
+        .to_string()
 }
 
 pub fn apply_operators_for_alternative_i(numbers: &Vec<isize>, alternative_index: isize) -> isize {
@@ -51,21 +33,16 @@ pub fn apply_operators_for_alternative_i(numbers: &Vec<isize>, alternative_index
 
 #[cfg(test)]
 mod test {
-    use crate::{apply_operators_for_alternative_i, part1};
-    use adv_code::year2024::day07::lib::parser::parse_input;
+    use crate::year2024::day07::lib::part1::apply_operators_for_alternative_i;
+    use crate::year2024::day07::lib::{part1, YEAR_2024_DAY_07_SOLUTION};
     use itertools::{repeat_n, Itertools};
-
-    const TEST_INPUT_FILE: &str = "input/2024/07/test_inputs_part1.txt";
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(TEST_INPUT_FILE), 3749);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part1(YEAR_2024_DAY_07_SOLUTION.get_parsed_test_inputs(1)),
+            "3749"
+        );
     }
 
     #[test]

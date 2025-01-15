@@ -1,25 +1,7 @@
-use adv_code::year2024::day07::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::year2024::day07::lib::parser::ParsedInput;
 use std::collections::HashMap;
 
-const INPUT_FILE: &str = "input/2024/07/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 07, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 581941094529163);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str) -> isize {
-    let equations = parse_input(&file_input_path);
-
+pub fn part2(equations: ParsedInput) -> String {
     equations
         .into_iter()
         .map(|(result, numbers)| {
@@ -31,7 +13,8 @@ fn part2(file_input_path: &str) -> isize {
         })
         .filter(Option::is_some)
         .map(Option::unwrap)
-        .sum()
+        .sum::<isize>()
+        .to_string()
 }
 
 pub fn apply_operators_for_alternative_rec<'a, 'b>(
@@ -75,21 +58,16 @@ pub fn apply_operators_for_alternative_rec<'a, 'b>(
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-    use adv_code::year2024::day07::lib::parser::parse_input;
+    use crate::year2024::day07::lib::part2::part2;
+    use crate::year2024::day07::lib::YEAR_2024_DAY_07_SOLUTION;
     use code_timing_macros::time_snippet;
-
-    const TEST_INPUT_FILE: &str = "input/2024/07/test_inputs_part2.txt";
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 11387);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_07_SOLUTION.get_parsed_test_inputs(2)),
+            "11387"
+        );
     }
 
     #[test]

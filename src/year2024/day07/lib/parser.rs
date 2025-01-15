@@ -16,7 +16,9 @@ fn equation_parser(input: &str) -> IResult<&str, Equation> {
     Ok((input, (result, numbers)))
 }
 
-pub fn parse_input(input_path: &str) -> Vec<Equation> {
+pub type ParsedInput = Vec<Equation>;
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let parsed_equations_result = separated_list1(newline, equation_parser)(&file_string);
