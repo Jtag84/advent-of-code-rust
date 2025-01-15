@@ -1,26 +1,9 @@
-use adv_code::lib::grid_utils::{Coordinates, GridCoordinates};
-use adv_code::year2024::day04::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::{Coordinates, GridCoordinates};
+use crate::year2024::day04::lib::parser::ParsedInput;
 
-const INPUT_FILE: &str = "input/2024/04/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 04, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 1815);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str) -> usize {
+pub fn part2(grid: ParsedInput) -> String {
     let mas = vec![Some(&'M'), Some(&'A'), Some(&'S')];
     let sam = vec![Some(&'S'), Some(&'A'), Some(&'M')];
-    let grid = parse_input(&file_input_path);
 
     grid.indexed_iter()
         .map(|(coordinates, _)| GridCoordinates::from(coordinates))
@@ -60,16 +43,18 @@ fn part2(file_input_path: &str) -> usize {
                 && (second_word.eq(&sam) || second_word.eq(&mas))
         })
         .count()
+        .to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-
-    const TEST_INPUT_FILE: &str = "input/2024/04/test_inputs_part2.txt";
+    use crate::year2024::day04::lib::{part2, YEAR_2024_DAY_04_SOLUTION};
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 9);
+        assert_eq!(
+            part2(YEAR_2024_DAY_04_SOLUTION.get_parsed_test_inputs(2)),
+            "9"
+        );
     }
 }

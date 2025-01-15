@@ -1,26 +1,9 @@
-use adv_code::lib::grid_utils::{Coordinates, Direction, GridCoordinates};
-use adv_code::year2024::day04::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::lib::grid_utils::{Coordinates, Direction, GridCoordinates};
+use crate::year2024::day04::lib::parser::ParsedInput;
 use strum::IntoEnumIterator;
 
-const INPUT_FILE: &str = "input/2024/04/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 04, 1);
-
-    let result = time_snippet!(part1(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 2344);
-
-    Ok(())
-}
-
-fn part1(file_input_path: &str) -> usize {
+pub fn part1(grid: ParsedInput) -> String {
     let xmas = vec![Some(&'X'), Some(&'M'), Some(&'A'), Some(&'S')];
-    let grid = parse_input(&file_input_path);
 
     grid.indexed_iter()
         .map(|(coordinates, _)| GridCoordinates::from(coordinates))
@@ -38,17 +21,19 @@ fn part1(file_input_path: &str) -> usize {
                 .filter(|letters: &Vec<Option<&char>>| letters.eq(&xmas))
                 .count()
         })
-        .sum()
+        .sum::<usize>()
+        .to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::part1;
-
-    const TEST_INPUT_FILE: &str = "input/2024/04/test_inputs_part1.txt";
+    use crate::year2024::day04::lib::{part1, YEAR_2024_DAY_04_SOLUTION};
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(TEST_INPUT_FILE), 18);
+        assert_eq!(
+            part1(YEAR_2024_DAY_04_SOLUTION.get_parsed_test_inputs(1)),
+            "18"
+        );
     }
 }
