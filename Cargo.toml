@@ -12,6 +12,7 @@ grid = "0.15.0"
 memoize = "0.4.2"
 pathfinding = "4.13.0"
 rounded-div = "0.1.2"
+colored = "3.0.0"
 
 # Additional recommended dependencies
 itertools = "0.13.0"

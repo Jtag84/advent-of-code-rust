@@ -1,4 +1,5 @@
 use clap::ValueEnum;
+use colored::*;
 use downcast_rs::{impl_downcast, DowncastSync};
 use itertools::Itertools;
 use memory_stats::memory_stats;
@@ -241,30 +242,30 @@ impl BenchmarkMetrics {
     }
 }
 
-pub fn format_duration(duration: Duration) -> String {
+pub fn format_duration(duration: Duration) -> ColoredString {
     if duration.as_nanos() < 1_000 {
-        format!("{} ns", duration.as_nanos())
+        format!("{} ns", duration.as_nanos()).green()
     } else if duration.as_nanos() < 1_000_000 {
-        format!("{:.2} µs", duration.as_nanos() as f64 / 1_000.0)
+        format!("{:.2} µs", duration.as_nanos() as f64 / 1_000.0).green()
     } else if duration.as_nanos() < 1_000_000_000 {
-        format!("{:.2} ms", duration.as_micros() as f64 / 1_000.0)
+        format!("{:.2} ms", duration.as_micros() as f64 / 1_000.0).yellow()
     } else {
-        format!("{:.2}  s", duration.as_secs_f64())
+        format!("{:.2}  s", duration.as_secs_f64()).red()
     }
 }
 
-pub fn format_bytes(bytes: usize) -> String {
+pub fn format_bytes(bytes: usize) -> ColoredString {
     const KB: usize = 1024;
     const MB: usize = KB * 1024;
     const GB: usize = MB * 1024;
 
     if bytes < KB {
-        format!("{}  B", bytes)
+        format!("{}  B", bytes).green()
     } else if bytes < MB {
-        format!("{:.2} KB", bytes as f64 / KB as f64)
+        format!("{:.2} KB", bytes as f64 / KB as f64).green()
     } else if bytes < GB {
-        format!("{:.2} MB", bytes as f64 / MB as f64)
+        format!("{:.2} MB", bytes as f64 / MB as f64).yellow()
     } else {
-        format!("{:.2} GB", bytes as f64 / GB as f64)
+        format!("{:.2} GB", bytes as f64 / GB as f64).red()
     }
 }
