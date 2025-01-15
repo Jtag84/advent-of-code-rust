@@ -5,7 +5,9 @@ use grid::Grid;
 type Start = GridCoordinates;
 type End = GridCoordinates;
 
-pub fn parse_input(input_path: &str) -> (Grid<char>, Start, End) {
+pub type ParsedInput = (Grid<char>, Start, End);
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let mut grid = parse_grid(input_path);
 
     let start = grid
