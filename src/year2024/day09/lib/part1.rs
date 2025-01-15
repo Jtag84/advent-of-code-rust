@@ -1,23 +1,6 @@
-use adv_code::year2024::day09::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::year2024::day09::lib::parser::ParsedInput;
 
-const INPUT_FILE: &str = "input/2024/09/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 09, 1);
-
-    let result = time_snippet!(part1(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 6435922584968);
-
-    Ok(())
-}
-
-fn part1(file_input_path: &str) -> usize {
-    let disk_layout = parse_input(&file_input_path);
+pub fn part1(disk_layout: ParsedInput) -> String {
     let mut file_compacted_map: Vec<usize> = Vec::new();
 
     let mut left_id: usize = 0;
@@ -53,24 +36,20 @@ fn part1(file_input_path: &str) -> usize {
         .into_iter()
         .enumerate()
         .map(|(index, id)| index * id)
-        .sum()
+        .sum::<usize>()
+        .to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::part1;
-    use adv_code::year2024::day09::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/09/test_inputs_part1.txt";
+    use crate::year2024::day09::lib::part1::part1;
+    use crate::year2024::day09::lib::YEAR_2024_DAY_09_SOLUTION;
 
     #[test]
     fn part1_test() {
-        assert_eq!(part1(TEST_INPUT_FILE), 1928);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part1(YEAR_2024_DAY_09_SOLUTION.get_parsed_test_inputs(1)),
+            "1928"
+        );
     }
 }

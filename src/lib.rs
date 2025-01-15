@@ -67,12 +67,15 @@ impl<P: ParsedInput + 'static + Clone + Debug> DaySolution<P> {
 
 impl<P: ParsedInput + 'static + Clone + Debug> Solution for DaySolution<P> {
     fn get_inputs_path(&self) -> String {
-        format!("input/{}/{}/inputs.txt", self.year_day.0, self.year_day.1)
+        format!(
+            "input/{}/{:0>2}/inputs.txt",
+            self.year_day.0, self.year_day.1
+        )
     }
 
     fn get_test_inputs_path(&self, part_number: usize) -> String {
         format!(
-            "input/{}/{}/test_inputs_part{}.txt",
+            "input/{}/{:0>2}/test_inputs_part{}.txt",
             self.year_day.0, self.year_day.1, part_number
         )
     }

@@ -8,7 +8,9 @@ fn str_number_parser(input: &str) -> IResult<&str, &str> {
     Ok((input, digits))
 }
 
-pub fn parse_input(input_path: &str) -> Vec<usize> {
+pub type ParsedInput = Vec<usize>;
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let digits_result = str_number_parser(&file_string);

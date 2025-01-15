@@ -1,22 +1,6 @@
-use crate::DiskSpace::{Free, Id};
-use adv_code::year2024::day09::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::year2024::day09::lib::parser::ParsedInput;
+use crate::year2024::day09::lib::part2::DiskSpace::{Free, Id};
 use itertools::Itertools;
-
-const INPUT_FILE: &str = "input/2024/09/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 09, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 6469636832766);
-
-    Ok(())
-}
 
 type Size = usize;
 
@@ -26,9 +10,7 @@ enum DiskSpace {
     Id(usize, Size),
 }
 
-fn part2(file_input_path: &str) -> usize {
-    let disk_layout = parse_input(&file_input_path);
-
+pub fn part2(disk_layout: ParsedInput) -> String {
     let mut compacted_disk: Vec<_> = disk_layout
         .into_iter()
         .enumerate()
@@ -97,25 +79,19 @@ fn part2(file_input_path: &str) -> usize {
         }
     }
 
-    checksum
+    checksum.to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-    use adv_code::year2024::day09::lib::parser::parse_input;
-
-    const TEST_INPUT_FILE: &str = "input/2024/09/test_inputs_part2.txt";
+    use crate::year2024::day09::lib::{part2, YEAR_2024_DAY_09_SOLUTION};
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 2858);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part2(YEAR_2024_DAY_09_SOLUTION.get_parsed_test_inputs(2)),
+            "2858"
+        );
     }
 
     #[test]
