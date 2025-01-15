@@ -32,7 +32,9 @@ fn updates_parser(input: &str) -> IResult<&str, Vec<Vec<Update>>> {
     Ok((input, updates_list))
 }
 
-pub fn parse_input(input_path: &str) -> (HashSet<Rule>, Vec<UpdateLine>) {
+pub type ParsedInput = (HashSet<Rule>, Vec<UpdateLine>);
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let (_, (rules, _, updates)) =
