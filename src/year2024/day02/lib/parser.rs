@@ -19,7 +19,9 @@ fn reports(input: &str) -> IResult<&str, Vec<Vec<i32>>> {
     Ok((input, reports))
 }
 
-pub fn parse_input(input_path: &str) -> Vec<Vec<i32>> {
+pub type ParsedInput = Vec<Vec<i32>>;
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let parsed_reports_result = reports(&file_string);

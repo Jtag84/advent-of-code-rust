@@ -1,24 +1,11 @@
-use adv_code::year2024::day02::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use code_timing_macros::time_snippet;
+use crate::year2024::day02::lib::parser::ParsedInput;
 
-const INPUT_FILE: &str = "input/2024/02/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(2024, 02, 2);
-
-    let result = time_snippet!(part2(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 621);
-
-    Ok(())
-}
-
-fn part2(file_input_path: &str) -> usize {
-    let reports = parse_input(&file_input_path);
-    reports.into_iter().filter(is_safe_up_to_one_wrong).count()
+pub fn part2(reports: ParsedInput) -> String {
+    reports
+        .into_iter()
+        .filter(is_safe_up_to_one_wrong)
+        .count()
+        .to_string()
 }
 
 fn is_safe_up_to_one_wrong(report: &Vec<i32>) -> bool {
@@ -54,12 +41,13 @@ fn is_safe(report: &Vec<i32>) -> bool {
 
 #[cfg(test)]
 mod test {
-    use crate::part2;
-
-    const TEST_INPUT_FILE: &str = "input/2024/02/test_inputs_part2.txt";
+    use crate::year2024::day02::lib::{part2, YEAR_2024_DAY_02_SOLUTION};
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(TEST_INPUT_FILE), 4);
+        assert_eq!(
+            part2(YEAR_2024_DAY_02_SOLUTION.get_parsed_test_inputs(2)),
+            "4"
+        );
     }
 }
