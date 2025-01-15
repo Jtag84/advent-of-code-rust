@@ -1,6 +1,24 @@
 use crate::year2024::day13::lib::parser::MachineBehavior;
+use crate::year2024::day13::lib::parser::{parse_input, ParsedInput};
+pub use crate::year2024::day13::lib::part1::part1;
+pub use crate::year2024::day13::lib::part2::part2;
+use crate::SOLUTIONS;
+use crate::{aoc_solver, DaySolution};
 
 pub mod parser;
+pub mod part1;
+pub mod part2;
+
+const YEAR_2024_DAY_13_SOLUTION: DaySolution<ParsedInput> = DaySolution {
+    year_day: (2024, 13),
+    parser: parse_input,
+    part1,
+    expected_part1: "29877",
+    part2,
+    expected_part2: "99423413811305",
+};
+
+aoc_solver!(YEAR_2024_DAY_13_SOLUTION);
 
 pub type ButtonACount = isize;
 pub type ButtonBCount = isize;
