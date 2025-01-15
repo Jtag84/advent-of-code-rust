@@ -1,8 +1,26 @@
+use crate::year2024::day17::lib::parser::{parse_input, ParsedInput};
 use crate::year2024::day17::lib::parser::{Program, RegisterA, RegisterB, RegisterC};
+pub use crate::year2024::day17::lib::part1::part1;
+pub use crate::year2024::day17::lib::part2::part2;
+use crate::SOLUTIONS;
+use crate::{aoc_solver, DaySolution};
 use itertools::{iterate, Itertools};
 use std::ops::{BitXor, Rem};
 
 pub mod parser;
+pub mod part1;
+pub mod part2;
+
+const YEAR_2024_DAY_17_SOLUTION: DaySolution<ParsedInput> = DaySolution {
+    year_day: (2024, 17),
+    parser: parse_input,
+    part1,
+    expected_part1: "6,5,7,4,5,7,3,1,0",
+    part2,
+    expected_part2: "105875099912602",
+};
+
+aoc_solver!(YEAR_2024_DAY_17_SOLUTION);
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct ProgramState {

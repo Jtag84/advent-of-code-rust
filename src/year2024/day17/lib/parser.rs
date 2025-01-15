@@ -24,7 +24,9 @@ fn program_parser(input: &str) -> IResult<&str, Program> {
     Ok((input, program))
 }
 
-pub fn parse_input(input_path: &str) -> (RegisterA, RegisterB, RegisterC, Program) {
+pub type ParsedInput = (RegisterA, RegisterB, RegisterC, Program);
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let result = tuple((
