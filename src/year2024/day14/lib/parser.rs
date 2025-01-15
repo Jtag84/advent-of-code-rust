@@ -23,7 +23,9 @@ fn position_and_speed_parser(input: &str) -> IResult<&str, PositionAndSpeed> {
     Ok((input, (XYCoordinates(px, py), XYCoordinates(sx, sy))))
 }
 
-pub fn parse_input(input_path: &str) -> Vec<PositionAndSpeed> {
+pub type ParsedInput = Vec<PositionAndSpeed>;
+
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
 
     let parsed = separated_list1(newline, position_and_speed_parser)(&file_string);
