@@ -60,7 +60,6 @@ pub fn apply_operators_for_alternative_rec<'a, 'b>(
 mod test {
     use crate::year2024::day07::lib::part2::part2;
     use crate::year2024::day07::lib::YEAR_2024_DAY_07_SOLUTION;
-    use code_timing_macros::time_snippet;
 
     #[test]
     fn part2_test() {
@@ -68,17 +67,5 @@ mod test {
             part2(YEAR_2024_DAY_07_SOLUTION.get_parsed_test_inputs(2)),
             "11387"
         );
-    }
-
-    #[test]
-    fn test_concat() {
-        let result: isize = time_snippet!({
-            let left = 123;
-            let right = 456;
-            let result_string = format!("{left}{right}");
-            result_string.parse().unwrap()
-        });
-
-        assert_eq!(result, 123456);
     }
 }

@@ -1,5 +1,5 @@
 use crate::lib::parser_commons::{find_all, read_file_to_string};
-use crate::year2024::day03::parser::OperationInstruction::{Dont, Mul};
+use crate::year2024::day03::lib::parser::OperationInstruction::{Dont, Mul};
 use nom::branch::alt;
 use nom::bytes::complete::tag;
 use nom::character::complete::{char, digit1};
@@ -8,7 +8,7 @@ use nom::sequence::tuple;
 use nom::IResult;
 use OperationInstruction::Do;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum OperationInstruction {
     Mul(i32, i32),
     Do,
@@ -43,22 +43,9 @@ fn find_all_operation_instructions(input: &str) -> Vec<OperationInstruction> {
     find_all(input, operation_instruction_parser)
 }
 
-fn find_all_muls(input: &str) -> Vec<(i32, i32)> {
-    find_all(input, mul_parser)
-        .iter()
-        .map(|operation| match operation {
-            Mul(x, y) => (*x, *y),
-            _ => panic!(),
-        })
-        .collect()
-}
+pub type ParsedInput = Vec<OperationInstruction>;
 
-pub fn part1_parse_input(input_path: &str) -> Vec<(i32, i32)> {
-    let file_string = read_file_to_string(input_path);
-    find_all_muls(&file_string)
-}
-
-pub fn part2_parse_input(input_path: &str) -> Vec<OperationInstruction> {
+pub fn parse_input(input_path: &str) -> ParsedInput {
     let file_string = read_file_to_string(input_path);
     find_all_operation_instructions(&file_string)
 }
