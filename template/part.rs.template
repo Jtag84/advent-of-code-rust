@@ -1,43 +1,19 @@
-use adv_code::year<YEAR>::day<DAY>::lib::parser::parse_input;
-use adv_code::*;
-use anyhow::*;
-use itertools::Itertools;
-use std::iter::zip;
-use code_timing_macros::time_snippet;
+use crate::year<YEAR>::day<DAY>::lib::parser::ParsedInput;
 
-const INPUT_FILE: &str = "input/<YEAR>/<DAY>/inputs.txt";
-
-fn main() -> Result<()> {
-    start_day(<YEAR>, <DAY>, <PART_NUMBER>);
-
-    let result = time_snippet!(part<PART_NUMBER>(INPUT_FILE));
-    println!("Result = {}", result);
-
-    assert_eq!(result, 1);
-
-    Ok(())
-}
-
-fn part<PART_NUMBER>(file_input_path: &str) -> isize {
-    let parsed = parse_input(&file_input_path);
-    0
+pub fn part<PART_NUMBER>(parsed_input: ParsedInput) -> String {
+    "Not Implemented yet".to_string()
 }
 
 #[cfg(test)]
 mod test {
-    use adv_code::year<YEAR>::day<DAY>::lib::parser::parse_input;
-    use crate::part<PART_NUMBER>;
-
-    const TEST_INPUT_FILE: &str = "input/<YEAR>/<DAY>/test_inputs_part<PART_NUMBER>.txt";
+    use crate::year<YEAR>::day<DAY>::lib::part<PART_NUMBER>::part<PART_NUMBER>;
+    use crate::year<YEAR>::day<DAY>::lib::YEAR_<YEAR>_DAY_<DAY>_SOLUTION;
 
     #[test]
     fn part<PART_NUMBER>_test() {
-        assert_eq!(part<PART_NUMBER>(TEST_INPUT_FILE), 1);
-    }
-
-    #[test]
-    fn test_parser() {
-        let parsed = parse_input(TEST_INPUT_FILE);
-        println!("Result = {:?}", parsed);
+        assert_eq!(
+            part<PART_NUMBER>(YEAR_<YEAR>_DAY_<DAY>_SOLUTION.get_parsed_test_inputs(1)),
+            "TBD"
+        );
     }
 }

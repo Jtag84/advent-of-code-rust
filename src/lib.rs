@@ -17,11 +17,6 @@ pub mod lib {
     pub mod parser_commons;
 }
 
-pub fn start_day(year: i32, day: i32, part: i32) {
-    println!("Advent of Code {year} - Day {:0>2}", day);
-    println!("=== Part {part} ===");
-}
-
 pub type Year = usize;
 pub type Day = usize;
 

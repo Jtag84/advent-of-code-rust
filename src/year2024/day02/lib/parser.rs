@@ -1,12 +1,7 @@
-use crate::lib::parser_commons::read_file_to_string;
-use nom::character::complete::{digit1, multispace1, space1};
-use nom::combinator::map_res;
+use crate::lib::parser_commons::{number, read_file_to_string};
+use nom::character::complete::{multispace1, space1};
 use nom::multi::separated_list1;
 use nom::IResult;
-
-fn number(input: &str) -> IResult<&str, i32> {
-    map_res(digit1, str::parse)(input)
-}
 
 fn report(input: &str) -> IResult<&str, Vec<i32>> {
     let (input, report) = separated_list1(space1, number)(input)?;

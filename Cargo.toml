@@ -4,30 +4,30 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.93"
-code-timing-macros = { version = "0.0.5", features = ["release"] }
-const_format = "0.2.33"
-nom = "7.1.3"
-grid = "0.15.0"
-memoize = "0.4.2"
-pathfinding = "4.13.0"
-rounded-div = "0.1.2"
+anyhow = "1.0.95"
+clap = { version = "4.5.26", features = ["derive"] }
 colored = "3.0.0"
+ctor = "0.2.9"
+downcast-rs = "2.0.1"
+grid = "0.15.0"
+itertools = "0.14.0"
+memory-stats = "1.2.0"
+nom = "7.1.3"
+once_cell = "1.20.2"
+pathfinding = "4.13.1"
+rayon = "1.10.0"
+strum = "0.26.3"
+strum_macros = "0.26.4"
+tabled = "0.17.0"
 
 # Additional recommended dependencies
-itertools = "0.13.0"
-regex = "1.11.1"
-log = "0.4.22"
-strum_macros = "0.26.4"
-strum = "0.26.3"
-tabled = "0.17.0"
-rayon = "1.10.0"
-clap = { version = "4.5.26", features = ["derive"] }
-memory-stats = "1.2.0"
-prettytable = "0.10.0"
-once_cell = "1.20.2"
-downcast-rs = "2.0.1"
-ctor = "0.2.9"
+# code-timing-macros = { version = "0.0.6", features = ["release"] }
+# const_format = "0.2.34"
+# log = "0.4.22"
+# memoize = "0.4.2"
+# prettytable = "0.10.0"
+# regex = "1.11.1"
+# rounded-div = "0.1.2"
 
 [[bin]]
 name = "aoc"
