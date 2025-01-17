@@ -59,6 +59,12 @@ impl<P: ParsedInput + 'static + Clone + Debug> DaySolution<P> {
         let input_file: String = self.get_test_inputs_path(part_number);
         (self.parser)(&*input_file)
     }
+
+    #[cfg(test)]
+    fn get_parsed_inputs(&self) -> P {
+        let input_file: String = self.get_inputs_path();
+        (self.parser)(&*input_file)
+    }
 }
 
 impl<P: ParsedInput + 'static + Clone + Debug> Solution for DaySolution<P> {

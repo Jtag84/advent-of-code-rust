@@ -61,7 +61,7 @@ fn main() -> anyhow::Result<()> {
         .iter()
         .map(|benchmark| benchmark.max_memory())
         .max()
-        .unwrap();
+        .unwrap_or(0);
 
     println!("{}", BenchmarkMetrics::footer(total_avg_time, max_memory));
     Ok(())
