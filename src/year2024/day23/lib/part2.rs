@@ -16,38 +16,30 @@ pub fn part2(connections_map: ParsedInput) -> String {
                 .map(|connection_list| connection_list.clone().into_iter().collect::<HashSet<_>>())
         })
         .unique_by(|connection| connection.iter().sorted().join(""))
-        .filter_map(|connections| {
-            let all_connected = connections
-                .iter()
-                .all(|c| is_connected_to_all(connections_map.clone(), &connections.clone(), c));
-            if all_connected {
-                Some(connections.clone())
-            } else {
-                None
-            }
-        })
-        .max_by(|set1, set2| set1.len().cmp(&set2.len()))
-        .unwrap()
+        .filter(|connections| is_all_connected(&connections_map, connections))
+        .exactly_one()
+        .expect("Error")
         .into_iter()
         .sorted()
         .join(",")
 }
 
-fn is_connected_to_all(
-    connections_map: ParsedInput,
-    connections: &HashSet<Computer>,
-    computer: &Computer,
-) -> bool {
-    if let Some(computer_connections) = connections_map.get(computer) {
-        let connections_with_computer = &computer_connections
-            .iter()
-            .chain(once(computer))
-            .cloned()
-            .collect();
-        connections.is_subset(connections_with_computer)
-    } else {
-        false
-    }
+fn is_all_connected(connections_map: &ParsedInput, connections: &HashSet<Computer>) -> bool {
+    let all_connected = connections
+        .iter()
+        .map(|computer| {
+            connections_map
+                .get(computer)
+                .unwrap()
+                .iter()
+                .chain(once(computer))
+                .cloned()
+                .collect::<HashSet<Computer>>()
+        })
+        .reduce(|set1, set2| set1.intersection(&set2).cloned().collect())
+        .unwrap();
+
+    all_connected == *connections
 }
 
 #[cfg(test)]
