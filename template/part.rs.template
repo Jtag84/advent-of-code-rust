@@ -12,7 +12,7 @@ mod test {
     #[test]
     fn part<PART_NUMBER>_test() {
         assert_eq!(
-            part<PART_NUMBER>(YEAR_<YEAR>_DAY_<DAY>_SOLUTION.get_parsed_test_inputs(1)),
+            part<PART_NUMBER>(YEAR_<YEAR>_DAY_<DAY>_SOLUTION.get_parsed_test_inputs(<PART_NUMBER>)),
             "TBD"
         );
     }

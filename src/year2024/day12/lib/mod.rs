@@ -213,7 +213,7 @@ fn group_gardens_for_coordinates(
 }
 
 fn count_corners(coordinates: GridCoordinates, grid: &Grid<char>) -> usize {
-    let current_region = coordinates.get_from_grid(&grid).unwrap();
+    let current_region = coordinates.get_grid_element(&grid).unwrap().clone();
 
     let same_as_west = coordinates.is_direction_equal_to_in_grid(&grid, West, current_region);
     let same_as_north_west =

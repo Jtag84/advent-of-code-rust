@@ -89,7 +89,7 @@ impl GridCoordinates {
         self.1
     }
 
-    pub fn get_grid_element<'a, T>(&self, grid: &'a Grid<T>) -> Option<&'a T> {
+    pub fn get_grid_element<'a, T: Clone>(&self, grid: &'a Grid<T>) -> Option<&'a T> {
         grid.get(self.row(), self.column())
     }
 
@@ -105,12 +105,8 @@ impl GridCoordinates {
     }
 
     pub fn is_equal_to_in_grid<T: Clone + PartialEq>(&self, grid: &Grid<T>, equal_to: T) -> bool {
-        self.get_from_grid(&grid)
-            .map_or_else(|| false, |v| v == equal_to)
-    }
-
-    pub fn get_from_grid<T: Clone>(&self, grid: &Grid<T>) -> Option<T> {
-        grid.get(self.row(), self.column()).cloned()
+        self.get_grid_element(&grid)
+            .map_or_else(|| false, |v| *v == equal_to)
     }
 }
 
