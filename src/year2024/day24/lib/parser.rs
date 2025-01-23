@@ -10,7 +10,7 @@ use std::collections::HashMap;
 
 pub type WireName = String;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum WireState {
     AND(WireName, WireName),
     OR(WireName, WireName),
@@ -20,6 +20,46 @@ pub enum WireState {
 }
 
 impl WireState {
+    pub fn is_xor(&self) -> bool {
+        match self {
+            XOR(_, _) => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_and(&self) -> bool {
+        match self {
+            AND(_, _) => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_or(&self) -> bool {
+        match self {
+            OR(_, _) => true,
+            _ => false,
+        }
+    }
+
+    pub fn has_xy_inputs(&self) -> bool {
+        match self {
+            AND(left, right) | OR(left, right) | XOR(left, right) => {
+                left.starts_with("x") && right.starts_with("y")
+                    || left.starts_with("y") && right.starts_with("x")
+            }
+            _ => false,
+        }
+    }
+
+    pub fn has_initial_xy_inputs(&self) -> bool {
+        match self {
+            AND(left, right) | XOR(left, right) => {
+                left == "x00" && right == "y00" || left == "y00" && right == "x00"
+            }
+            _ => false,
+        }
+    }
+
     pub fn is_known_value(&self) -> bool {
         match self {
             ONE | ZERO => true,
