@@ -1,6 +1,6 @@
 use crate::year2024::day25::lib::parser::ParsedInput;
 use itertools::Itertools;
-use rayon::iter::IntoParallelIterator;
+use rayon::iter::IntoParallelRefIterator;
 use rayon::iter::ParallelIterator;
 
 pub fn part1((locks, keys): ParsedInput) -> String {
@@ -36,7 +36,7 @@ pub fn part1((locks, keys): ParsedInput) -> String {
         .collect_vec();
 
     locks_max_rows
-        .into_par_iter()
+        .par_iter()
         .map(|lock| {
             keys_min_rows
                 .iter()
