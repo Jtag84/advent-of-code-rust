@@ -129,9 +129,9 @@ impl ProgramState {
     fn get_combo_operand(&self, operand: Operand) -> Operand {
         match operand {
             0 | 1 | 2 | 3 => operand,
-            4 => self.register_a as Operand,
-            5 => self.register_b as Operand,
-            6 => self.register_c as Operand,
+            4 => self.register_a,
+            5 => self.register_b,
+            6 => self.register_c,
             7 => panic!("Not allowed for combo operands"),
             _ => panic!("Unexpected operand encountered!"),
         }
