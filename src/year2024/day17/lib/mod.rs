@@ -95,11 +95,11 @@ impl ProgramState {
                 self.register_a = self.register_a / 2_isize.pow(combo_operand as u32);
             }
             BXL => {
-                self.register_b = self.register_b.bitxor(operand as isize);
+                self.register_b = self.register_b.bitxor(operand);
             }
             BST => {
                 let combo_operand = self.get_combo_operand(operand);
-                self.register_b = combo_operand.rem(8) as RegisterB;
+                self.register_b = combo_operand.rem(8);
             }
             JNZ => {
                 if self.register_a != 0 {
@@ -111,7 +111,7 @@ impl ProgramState {
             }
             OUT => {
                 let combo_operand = self.get_combo_operand(operand);
-                self.output.push(combo_operand.rem(8) as isize);
+                self.output.push(combo_operand.rem(8));
             }
             BDV => {
                 let combo_operand = self.get_combo_operand(operand);

@@ -28,25 +28,25 @@ where
 {
     move |input: Input| {
         if let Some(count) = cache.get(&input) {
-            return std::prelude::rust_2015::Ok((input, *count));
+            return Ok((input, *count));
         }
 
         let mut matched_count = 0;
         for pattern in patterns {
             let res = tag::<Input, Input, error::Error<Input>>(pattern.clone())(input.clone());
-            if let std::prelude::rust_2015::Ok((remaining, _)) = res {
+            if let Ok((remaining, _)) = res {
                 if remaining.input_len() == 0 {
                     matched_count += 1;
                 } else {
                     let rec_res = parse_design_match_count::<Input>(patterns, cache)(remaining);
-                    if let std::prelude::rust_2015::Ok((_, count)) = rec_res {
+                    if let Ok((_, count)) = rec_res {
                         matched_count += count;
                     }
                 }
             }
         }
         cache.insert(input.clone(), matched_count);
-        std::prelude::rust_2015::Ok((input, matched_count))
+        Ok((input, matched_count))
     }
 }
 

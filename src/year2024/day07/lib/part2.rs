@@ -17,9 +17,9 @@ pub fn part2(equations: ParsedInput) -> String {
         .to_string()
 }
 
-pub fn apply_operators_for_alternative_rec<'a, 'b>(
+pub fn apply_operators_for_alternative_rec<'a>(
     numbers: &'a [isize],
-    cache: &'b mut HashMap<&'a [isize], Vec<isize>>,
+    cache: &mut HashMap<&'a [isize], Vec<isize>>,
 ) -> Vec<isize> {
     let cache_key = numbers;
     if let Some(result) = cache.get(cache_key) {

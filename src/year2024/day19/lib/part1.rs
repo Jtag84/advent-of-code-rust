@@ -25,9 +25,9 @@ where
     move |input: Input| {
         for pattern in patterns {
             let res = tag::<Input, Input, error::Error<Input>>(pattern.clone())(input.clone());
-            if let std::prelude::rust_2015::Ok((remaining, matched)) = res {
+            if let Ok((remaining, matched)) = res {
                 if remaining.input_len() == 0 {
-                    return std::prelude::rust_2015::Ok((remaining, matched));
+                    return Ok((remaining, matched));
                 } else {
                     let rec_res = parse_design::<Input>(patterns)(remaining);
                     if rec_res.is_ok() {

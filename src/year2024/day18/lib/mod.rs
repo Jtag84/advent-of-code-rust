@@ -6,7 +6,6 @@ use crate::SOLUTIONS;
 use crate::{aoc_solver, DaySolution};
 use pathfinding::prelude::astar;
 use std::collections::HashSet;
-use std::string::ToString;
 
 pub mod parser;
 pub mod part1;

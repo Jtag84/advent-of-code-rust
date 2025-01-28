@@ -2,7 +2,6 @@ use crate::year2024::day25::lib::parser::{parse_input, ParsedInput};
 pub use crate::year2024::day25::lib::part1::part1;
 use crate::SOLUTIONS;
 use crate::{aoc_solver, DaySolution};
-use std::string::ToString;
 
 pub mod parser;
 pub mod part1;
