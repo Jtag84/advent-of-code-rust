@@ -68,10 +68,10 @@ Options:
 cargo run --bin aoc --release -- -y 2024
 
 # Run specific days
-cargo run --bin aoc --release -- -y 2024 -d 1,2,3
+cargo run --bin aoc --release -- -y 2024 -d 1 -d 2 -d 3
 
 # Run specific parts
-cargo run --bin aoc --release -- -y 2024 -p parser,part1,part2
+cargo run --bin aoc --release -- -y 2024 -p input-parser -p part1
 ```
 
 ## Performance
