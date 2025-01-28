@@ -51,6 +51,19 @@ cd <repository>
 4. **Run Solutions**:
 
 ```bash
+# Usage
+cargo run --bin aoc -- -h               
+
+Usage: aoc [OPTIONS]
+
+Options:
+  -i, --iterations <ITERATIONS>  [default: 1]
+  -y, --years <YEARS>            
+  -d, --days <DAYS>              
+  -p, --part <PART>              [possible values: part1, part2, input-parser]
+  -h, --help                     Print help
+  -V, --version                  Print version
+
 # Run all solutions for 2024
 cargo run --bin aoc --release -- -y 2024
 
