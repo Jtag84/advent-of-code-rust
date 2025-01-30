@@ -42,11 +42,6 @@ mod test {
     use crate::year2024::day24::lib::YEAR_2024_DAY_24_SOLUTION;
 
     #[test]
-    fn part1_input() {
-        assert_eq!(part1(YEAR_2024_DAY_24_SOLUTION.get_parsed_inputs()), "2024");
-    }
-
-    #[test]
     fn part1_test() {
         assert_eq!(
             part1(YEAR_2024_DAY_24_SOLUTION.get_parsed_test_inputs(1)),

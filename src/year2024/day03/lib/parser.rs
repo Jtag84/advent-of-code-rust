@@ -1,9 +1,8 @@
-use crate::lib::parser_commons::{find_all, read_file_to_string};
+use crate::lib::parser_commons::{find_all, number, read_file_to_string};
 use crate::year2024::day03::lib::parser::OperationInstruction::{Dont, Mul};
 use nom::branch::alt;
 use nom::bytes::complete::tag;
-use nom::character::complete::{char, digit1};
-use nom::combinator::map_res;
+use nom::character::complete::char;
 use nom::sequence::tuple;
 use nom::IResult;
 use OperationInstruction::Do;
@@ -13,10 +12,6 @@ pub enum OperationInstruction {
     Mul(i32, i32),
     Do,
     Dont,
-}
-
-fn number(input: &str) -> IResult<&str, i32> {
-    map_res(digit1, str::parse)(input)
 }
 
 fn mul_parser(input: &str) -> IResult<&str, OperationInstruction> {
